@@ -34,6 +34,7 @@ public class SignUpServices {
 
         if(userRepo.getUserByEmail(signUpDTO.getEmail()) == null){
             Address address = addressMapper.map(signUpDTO.getAddress());
+            address.setUsers(null);
             User user = userMapper.map(signUpDTO);
             user.setAddress(address);
             user.setType("customer");
