@@ -6,4 +6,5 @@ import iti.jets.marketplace.models.Product;
 
 public interface ProductRepo extends JpaRepository<Product,Integer>{
     
+    public Product findProductByproductName(String productName);
 }

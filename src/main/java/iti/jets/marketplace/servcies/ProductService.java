@@ -13,6 +13,7 @@ import iti.jets.marketplace.utils.ResponseViewModel;
 @Service
 public class ProductService {
     
+    @Autowired
     private final ProductRepo productRepo;
     private final ProductMapper productMapper;
     private ResponseViewModel response = new ResponseViewModel();
@@ -29,6 +30,16 @@ public class ProductService {
         productRepo.saveAndFlush(p);
 
         response.setResponseBody("Product added successfully", HttpStatus.OK , p);
+
+        return response;
+    }
+
+    public ResponseViewModel searchByName(String productName)
+    {
+
+        Product p = productRepo.findProductByproductName(productName);
+        ProductDTO productDTO = productMapper.producToProductDto(p);
+        response.setResponseBody("done",HttpStatus.valueOf(200),productDTO);
 
         return response;
     }

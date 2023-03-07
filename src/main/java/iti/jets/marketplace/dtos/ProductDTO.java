@@ -15,5 +15,5 @@ public class ProductDTO {
     private String productDescription;
     private int productAmount;
     private float price;
-    private Set<Image> images = new HashSet<Image>(0);
+    // private Set<Image> images = new HashSet<Image>(0);
 }

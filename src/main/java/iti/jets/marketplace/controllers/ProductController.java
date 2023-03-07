@@ -1,6 +1,7 @@
 package iti.jets.marketplace.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,12 @@ public class ProductController {
 
     public ProductController(ProductService productService) {
         this.productService = productService;
+    }
+
+    @GetMapping("{productName}")
+    public ResponseViewModel searchProductByName(@PathVariable String productName)
+    {
+      return  productService.searchByName(productName);
     }
 
 
