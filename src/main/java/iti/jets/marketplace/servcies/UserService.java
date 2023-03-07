@@ -18,9 +18,12 @@ private final UserMapper userMapper ;
         this.userMapper = userMapper;
     }
 
-    public UserDTO findUserById(int id){
-    UserDTO userDTO = userMapper.map(userRepo.findById(id).get());
-    return  userDTO ;
+    public UserDTO findUserById(int id) {
+        UserDTO userDTO = userMapper.map(userRepo.findById(id).get());
+        return userDTO;
+    }
 
-}
+    public void updateUser(UserDTO userDTO){
+        userRepo.save(userMapper.map(userDTO));
+    }
 }
