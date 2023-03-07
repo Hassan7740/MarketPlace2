@@ -1,6 +1,7 @@
 // default package
 // Generated Mar 4, 2023, 11:48:59 PM by Hibernate Tools 6.0.0.Alpha3
 package iti.jets.marketplace.models;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 

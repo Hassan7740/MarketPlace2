@@ -4,11 +4,7 @@ import iti.jets.marketplace.dtos.UserDTO;
 import iti.jets.marketplace.servcies.UserService;
 import iti.jets.marketplace.utils.ResponseViewModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
@@ -28,6 +24,13 @@ public class UserController {
     UserDTO userDTO = userService.findUserById(id);
    response.setResponseBody("user found", HttpStatus.OK, userDTO);
     return response.getResponseBody();
+  }
+
+    @PostMapping
+    public Map updateUser(@RequestBody  UserDTO userDTO){
+        userService.updateUser(userDTO);
+        response.setResponseBody("user updated successfully" , HttpStatus.ACCEPTED , "Done");
+        return response.getResponseBody();
   }
 
 }

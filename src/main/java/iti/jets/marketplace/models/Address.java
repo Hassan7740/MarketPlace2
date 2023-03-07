@@ -4,8 +4,6 @@ package iti.jets.marketplace.models;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -32,7 +29,7 @@ public class Address  implements java.io.Serializable {
      private String street;
      private Integer buildNo;
      private Integer floorNo;
-    //  private User users = new User();
+     private Set<User> users = new HashSet<User>(0);
 
     public Address() {
     }
@@ -43,13 +40,13 @@ public class Address  implements java.io.Serializable {
         this.area = area;
         this.street = street;
     }
-    public Address(String country, String area, String street, Integer buildNo, Integer floorNo) {
+    public Address(String country, String area, String street, Integer buildNo, Integer floorNo, Set<User> users) {
        this.country = country;
        this.area = area;
        this.street = street;
        this.buildNo = buildNo;
        this.floorNo = floorNo;
-    //    this.users = users;
+       this.users = users;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -114,14 +111,14 @@ public class Address  implements java.io.Serializable {
         this.floorNo = floorNo;
     }
 
-    // @OneToOne(fetch=FetchType.LAZY, mappedBy="address")
-    // public User getUsers() {
-    //     return this.users;
-    // }
+@OneToMany(fetch=FetchType.LAZY, mappedBy="address")
+    public Set<User> getUsers() {
+        return this.users;
+    }
     
-    // public void setUsers(User users) {
-    //     this.users = users;
-    // }
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 
 
 
