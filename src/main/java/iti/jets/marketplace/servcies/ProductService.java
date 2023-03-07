@@ -1,5 +1,7 @@
 package iti.jets.marketplace.servcies;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class ProductService {
         this.productMapper = productMapper;
     }
 
-    public ResponseViewModel add(ProductDTO productDTO)
+    public Map add(ProductDTO productDTO)
     {
         Product p = productMapper.productDtoToProduct(productDTO);
 
@@ -31,17 +33,17 @@ public class ProductService {
 
         response.setResponseBody("Product added successfully", HttpStatus.OK , p);
 
-        return response;
+        return response.getResponseBody();
     }
 
-    public ResponseViewModel searchByName(String productName)
+    public Map searchByName(String productName)
     {
 
         Product p = productRepo.findProductByproductName(productName);
         ProductDTO productDTO = productMapper.producToProductDto(p);
         response.setResponseBody("done",HttpStatus.valueOf(200),productDTO);
 
-        return response;
+        return response.getResponseBody();
     }
 
 
