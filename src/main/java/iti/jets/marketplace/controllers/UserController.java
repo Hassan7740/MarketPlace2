@@ -14,16 +14,17 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-  UserService userService;
-  ResponseViewModel response = new ResponseViewModel();
+
+  private final UserService userService;
+ private ResponseViewModel response = new ResponseViewModel();
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 
-
-  UserController(UserService userService ){
-    this.userService = userService ;
-  }
-  @GetMapping("{id}")
-  public Map<String,Object> findUserById(@PathVariable int id) {
+    @GetMapping("{id}")
+  public Map findUserById(@PathVariable int id) {
     UserDTO userDTO = userService.findUserById(id);
    response.setResponseBody("user found", HttpStatus.OK, userDTO);
     return response.getResponseBody();

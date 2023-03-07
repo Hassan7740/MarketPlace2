@@ -1,11 +1,12 @@
 package iti.jets.marketplace.dtos;
 
-import iti.jets.marketplace.models.Address;
+import lombok.Data;
 
-
+@Data
 public class UserDTO {
     private Integer userId;
-    private Address address;
+
+    private AddressDTO address;
     private String firstName;
     private String lastName;
     private String gender;
@@ -23,11 +24,11 @@ public class UserDTO {
         this.userId = userId;
     }
 
-    public Address getAddress() {
+    public AddressDTO getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressDTO address) {
         this.address = address;
     }
 
