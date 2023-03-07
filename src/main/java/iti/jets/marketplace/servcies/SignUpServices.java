@@ -21,7 +21,7 @@ public class SignUpServices {
     private final AddressMapper addressMapper ;
 
 
-    private ResponseViewModel responseViewModel;
+
 
     public SignUpServices(UserRepo userRepo, UserMapper userMapper, AddressMapper addressMapper) {
         this.userRepo = userRepo;
@@ -30,29 +30,22 @@ public class SignUpServices {
     }
 
     
-    public ResponseViewModel saveUser(UserDTO signUpDTO){
-
-        responseViewModel = new ResponseViewModel();
+    public UserDTO saveUser(UserDTO signUpDTO){
 
         if(userRepo.getUserByEmail(signUpDTO.getEmail()) == null){
-
             Address address = addressMapper.map(signUpDTO.getAddress());
             User user = userMapper.map(signUpDTO);
             user.setAddress(address);
             user.setType("customer");
             userRepo.save(user);
-
-
-
             user.setPassword(null);
 
-            responseViewModel.setResponseBody("User Saved Successfully", HttpStatus.valueOf(200), user);
-            
-        }else{
+            signUpDTO = userMapper.map(user);
 
-            responseViewModel.setResponseBody("User Already Exist", HttpStatus.valueOf(406), null );
+        }else{
+            signUpDTO = null;
         }
         
-        return responseViewModel; 
+        return signUpDTO;
     }
 }
