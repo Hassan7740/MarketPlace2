@@ -21,7 +21,11 @@ public class User  implements java.io.Serializable {
 
 
      private Integer userId;
+
+
+     
      private Address address;
+
      private String firstName;
      private String lastName;
      private String gender;
@@ -71,18 +75,19 @@ public class User  implements java.io.Serializable {
         this.userId = userId;
     }
 
-@ManyToOne(fetch=FetchType.LAZY , cascade = CascadeType.ALL)
-    @JoinColumn(name="addressId", nullable=false)
+    @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
+    @JoinColumn(name="addressId")
     public Address getAddress() {
         return this.address;
     }
     
+
     public void setAddress(Address address) {
         this.address = address;
     }
 
     
-    @Column(name="firstName", nullable=false, length=45)
+    @Column(name="firstName", length=45)
     public String getFirstName() {
         return this.firstName;
     }
@@ -92,7 +97,7 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="lastName", nullable=false, length=45)
+    @Column(name="lastName", length=45)
     public String getLastName() {
         return this.lastName;
     }
