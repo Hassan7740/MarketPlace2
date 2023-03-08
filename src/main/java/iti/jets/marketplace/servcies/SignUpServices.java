@@ -44,7 +44,7 @@ public class SignUpServices {
         }else{
             signUpDTO = null;
         }
-        
+
         return signUpDTO;
     }
 }

@@ -26,7 +26,7 @@ public class SignUpController {
 
 
     @PostMapping
-    public Map addNewUser(@RequestBody UserDTO signUpDTO ){
+    public Object addNewUser(@RequestBody UserDTO signUpDTO ){
         UserDTO signUpDTORes = signUpServices.saveUser(signUpDTO);
 
         if( signUpDTORes != null){
@@ -38,5 +38,5 @@ public class SignUpController {
         }
         return responseViewModel.getResponseBody();
     }
-    
+
 }
