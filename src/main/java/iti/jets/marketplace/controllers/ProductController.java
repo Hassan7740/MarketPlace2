@@ -12,6 +12,7 @@ import iti.jets.marketplace.servcies.ProductService;
 import iti.jets.marketplace.utils.ResponseViewModel;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -39,6 +40,16 @@ public class ProductController {
         
        return productService.add(productDTO);
 
+    }
+
+    @DeleteMapping("{id}")
+      public ResponseViewModel deleteProductById(@PathVariable Integer id){
+      return  productService.deleteProductById(id);
+    }
+
+    @PutMapping("/update")
+      public ResponseViewModel updateProduct(@RequestBody ProductDTO productDTO){
+      return productService.updateProduct(productDTO);
     }
     
     

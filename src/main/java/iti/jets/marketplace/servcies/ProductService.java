@@ -1,10 +1,13 @@
 package iti.jets.marketplace.servcies;
 
+import java.util.Optional;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.mappers.ProductMapper;
@@ -46,5 +49,32 @@ public class ProductService {
         return response.getResponseBody();
     }
 
+    public ResponseViewModel deleteProductById(@PathVariable Integer id){
+		// responseViewModel = new ResponseViewModel();
+		Optional<Product> product = productRepo.findById(id);
+		if (product.isPresent()) {
+			productRepo.deleteById(id);
+			response.setResponseBody("Product Deleted Successfully",HttpStatus.valueOf(200),"none");	
+		}
+		else{
+			response.setResponseBody("No such product",HttpStatus.valueOf(404),"none");	
+		}
+		return response;
+    }
+
+    public ResponseViewModel updateProduct(ProductDTO productDTO){
+        response = new ResponseViewModel();
+        Optional<Product> productCheck = productRepo.findById(productDTO.getProductId());
+        Optional<Product> ProductCategoryCheck = productRepo.findById(productDTO.getCategory().getCategoryId()); 
+        if(productCheck.isPresent() && ProductCategoryCheck.isPresent()){
+            Product product = productMapper.productDtoToProduct(productDTO);
+            productRepo.save(product);
+            response.setResponseBody("product updated successfully",HttpStatus.valueOf(200),"none");	
+        }
+        else{
+            response.setResponseBody("Couldn't update product",HttpStatus.valueOf(404),"none");	
+        }
+        return response;
+    }
 
 }
