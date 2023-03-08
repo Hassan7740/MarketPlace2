@@ -75,7 +75,7 @@ public class User  implements java.io.Serializable {
         this.userId = userId;
     }
 
-    @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
+    @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="addressId")
     public Address getAddress() {
         return this.address;
