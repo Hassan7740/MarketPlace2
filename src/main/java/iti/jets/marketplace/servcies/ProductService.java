@@ -49,6 +49,16 @@ public class ProductService {
 
         
     }
+    public ResponseViewModel<ProductDTO> searchById(int id){
+                Product product = productRepo.getProductByproductId(id);
+
+                if(product != null){
+                    ProductDTO productDTO = productMapper.producToProductDto(product);
+                    return ResponseViewModel.<ProductDTO>builder().data(productDTO).message("Get data for user Successfully").statusCode(HttpStatus.OK.value()).build();
+                }
+                    return ResponseViewModel.<ProductDTO>builder().data(null).message("User Not Found").statusCode(HttpStatus.NOT_FOUND.value()).build();
+                    
+    }
 
     public ResponseViewModel<Object> deleteProductById(@PathVariable Integer id){
 		// responseViewModel = new ResponseViewModel();
