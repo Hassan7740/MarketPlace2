@@ -5,8 +5,10 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.*;
 
 import iti.jets.marketplace.dtos.ProductDTO;
+import iti.jets.marketplace.models.Product;
 import iti.jets.marketplace.servcies.ProductService;
 import iti.jets.marketplace.utils.ResponseViewModel;
+import iti.jets.marketplace.utils.ResponseViewModel.ResponseViewModelBuilder;
 
 
 @RestController
@@ -22,26 +24,26 @@ public class ProductController {
     }
 
     @GetMapping("{productName}")
-    public Map searchProductByName(@PathVariable String productName)
+    public ResponseViewModel<ProductDTO> searchProductByName(@PathVariable String productName)
     {
       return  productService.searchByName(productName);
     }
 
 
     @PostMapping
-    public Map addProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseViewModel<Product> addProduct(@RequestBody ProductDTO productDTO) {
         
        return productService.add(productDTO);
 
     }
 
     @DeleteMapping("{id}")
-      public ResponseViewModel deleteProductById(@PathVariable Integer id){
+      public ResponseViewModelBuilder<Object> deleteProductById(@PathVariable Integer id){
       return  productService.deleteProductById(id);
     }
 
     @PutMapping("/update")
-      public ResponseViewModel updateProduct(@RequestBody ProductDTO productDTO){
+      public ResponseViewModelBuilder<Object> updateProduct(@RequestBody ProductDTO productDTO){
       return productService.updateProduct(productDTO);
     }
     
