@@ -1,14 +1,9 @@
 package iti.jets.marketplace.controllers;
-
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.*;
-
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.models.Product;
 import iti.jets.marketplace.servcies.ProductService;
 import iti.jets.marketplace.utils.ResponseViewModel;
-import iti.jets.marketplace.utils.ResponseViewModel.ResponseViewModelBuilder;
 
 
 @RestController

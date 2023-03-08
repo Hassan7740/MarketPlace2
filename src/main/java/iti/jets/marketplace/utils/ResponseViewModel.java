@@ -6,6 +6,7 @@ import lombok.Value;
 
 @Data
 @Value
+@Builder
 @AllArgsConstructor
 public class ResponseViewModel<T> {
     private String message;
