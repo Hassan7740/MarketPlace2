@@ -1,6 +1,8 @@
 package iti.jets.marketplace.mappers;
 
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
@@ -14,4 +16,7 @@ public interface ProductMapper {
     ProductDTO producToProductDto(Product product);
 
     Product productDtoToProduct(ProductDTO productDTO);
+
+
+    List<ProductDTO> toDTOList(List<Product> products);
 }

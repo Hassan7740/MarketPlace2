@@ -14,6 +14,7 @@ import iti.jets.marketplace.mappers.ProductMapper;
 import iti.jets.marketplace.models.Product;
 import iti.jets.marketplace.repos.ProductRepo;
 import iti.jets.marketplace.utils.ResponseViewModel;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -34,12 +35,19 @@ public class ProductService {
         return ResponseViewModel.<Product>builder().data(p).message("Product added successfully").statusCode(HttpStatus.OK.value()).build();
     }
 
-    public ResponseViewModel<ProductDTO> searchByName(String productName)
+    public ResponseViewModel<List<ProductDTO>> searchByName(String productName)
     {
-        Product p = productRepo.findProductByproductName(productName);
-        ProductDTO productDTO = productMapper.producToProductDto(p);
-        return ResponseViewModel.<ProductDTO>builder().data(productDTO).message("done").statusCode(HttpStatus.OK.value()).build();
+        List<Product> p = productRepo.findProductByproductName(productName);
 
+        if(!p.isEmpty()){
+            List<ProductDTO> productDTO = productMapper.toDTOList(p);
+            // ProductDTO productDTO = productMapper.producToProductDto(p);
+            return ResponseViewModel.<List<ProductDTO>>builder().data(productDTO).message("get All Proudct with name : " + productName ).statusCode(HttpStatus.OK.value()).build();
+
+        }
+        return ResponseViewModel.<List<ProductDTO>>builder().data(null).message("Not Found Product : " + productName).statusCode(HttpStatus.NOT_FOUND.value()).build();
+
+        
     }
 
     public ResponseViewModel<Object> deleteProductById(@PathVariable Integer id){

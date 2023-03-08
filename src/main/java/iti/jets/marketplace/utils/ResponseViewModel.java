@@ -1,4 +1,7 @@
 package iti.jets.marketplace.utils;
+import java.util.List;
+
+import iti.jets.marketplace.dtos.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,4 +1,6 @@
 package iti.jets.marketplace.controllers;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.models.Product;
@@ -25,7 +27,7 @@ public class ProductController {
     }
 
     @GetMapping("{productName}")
-    public ResponseViewModel<ProductDTO> searchProductByName(@PathVariable String productName)
+    public ResponseViewModel<List<ProductDTO>> searchProductByName(@PathVariable String productName)
     {
       return  productService.searchByName(productName);
     }
