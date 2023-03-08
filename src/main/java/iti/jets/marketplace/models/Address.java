@@ -2,12 +2,11 @@
 // Generated Mar 4, 2023, 11:48:59 PM by Hibernate Tools 6.0.0.Alpha3
 package iti.jets.marketplace.models;
 
-<<<<<<< HEAD
-=======
+
 import java.util.HashSet;
 import java.util.Set;
 
->>>>>>> b6566a6ca6dbbd705b7a0a4e424a75b306cc5d8e
+
 import jakarta.persistence.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -28,11 +27,9 @@ public class Address  implements java.io.Serializable {
      private String street;
      private Integer buildNo;
      private Integer floorNo;
-<<<<<<< HEAD
-    //  private User users = new User();
-=======
+
      private User users = new User();
->>>>>>> b6566a6ca6dbbd705b7a0a4e424a75b306cc5d8e
+
 
     public Address() {
     }
@@ -43,11 +40,9 @@ public class Address  implements java.io.Serializable {
         this.area = area;
         this.street = street;
     }
-<<<<<<< HEAD
+
     public Address(String country, String area, String street, Integer buildNo, Integer floorNo) {
-=======
-    public Address(String country, String area, String street, Integer buildNo, Integer floorNo, User users) {
->>>>>>> b6566a6ca6dbbd705b7a0a4e424a75b306cc5d8e
+
        this.country = country;
        this.area = area;
        this.street = street;
@@ -118,7 +113,7 @@ public class Address  implements java.io.Serializable {
         this.floorNo = floorNo;
     }
 
-<<<<<<< HEAD
+
     // @OneToOne(fetch=FetchType.LAZY, mappedBy="address")
     // public User getUsers() {
     //     return this.users;
@@ -127,7 +122,7 @@ public class Address  implements java.io.Serializable {
     // public void setUsers(User users) {
     //     this.users = users;
     // }
-=======
+
 @OneToOne(fetch=FetchType.LAZY, mappedBy="address")
     public User getUsers() {
         return this.users;
@@ -136,9 +131,6 @@ public class Address  implements java.io.Serializable {
     public void setUsers(User users) {
         this.users = users;
     }
->>>>>>> b6566a6ca6dbbd705b7a0a4e424a75b306cc5d8e
-
-
 
 
 }
