@@ -23,27 +23,25 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @PostMapping
+    public ResponseViewModel<Product> addProduct(@RequestBody ProductDTO productDTO) {
+        
+       return productService.add(productDTO);
+    }
+
     @GetMapping("{productName}")
     public ResponseViewModel<ProductDTO> searchProductByName(@PathVariable String productName)
     {
       return  productService.searchByName(productName);
     }
 
-
-    @PostMapping
-    public ResponseViewModel<Product> addProduct(@RequestBody ProductDTO productDTO) {
-        
-       return productService.add(productDTO);
-
-    }
-
     @DeleteMapping("{id}")
-      public ResponseViewModelBuilder<Object> deleteProductById(@PathVariable Integer id){
+      public ResponseViewModel<Object> deleteProductById(@PathVariable Integer id){
       return  productService.deleteProductById(id);
     }
 
-    @PutMapping("/update")
-      public ResponseViewModelBuilder<Object> updateProduct(@RequestBody ProductDTO productDTO){
+    @PatchMapping("/update")
+      public ResponseViewModel<Object> updateProduct(@RequestBody ProductDTO productDTO){
       return productService.updateProduct(productDTO);
     }
     
