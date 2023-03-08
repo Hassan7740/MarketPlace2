@@ -1,4 +1,5 @@
 package iti.jets.marketplace.controllers;
+
 import org.springframework.web.bind.annotation.*;
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.models.Product;
@@ -11,8 +12,6 @@ import iti.jets.marketplace.utils.ResponseViewModel;
 public class ProductController {
 
     private final ProductService productService;
-
-    
 
     public ProductController(ProductService productService) {
         this.productService = productService;

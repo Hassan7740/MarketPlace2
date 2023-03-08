@@ -1,14 +1,10 @@
 package iti.jets.marketplace.servcies;
 
 import java.util.Optional;
-
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.mappers.ProductMapper;
 import iti.jets.marketplace.models.Product;
@@ -43,7 +39,6 @@ public class ProductService {
     }
 
     public ResponseViewModel<Object> deleteProductById(@PathVariable Integer id){
-		// responseViewModel = new ResponseViewModel();
 		Optional<Product> product = productRepo.findById(id);
 		if (product.isPresent()) {
 			productRepo.deleteById(id);
@@ -55,7 +50,6 @@ public class ProductService {
     }
 
     public ResponseViewModel<Object> updateProduct(ProductDTO productDTO){
-        // response = new ResponseViewModel();
         Optional<Product> productCheck = productRepo.findById(productDTO.getProductId());
         Optional<Product> ProductCategoryCheck = productRepo.findById(productDTO.getCategory().getCategoryId()); 
         if(productCheck.isPresent() && ProductCategoryCheck.isPresent()){
