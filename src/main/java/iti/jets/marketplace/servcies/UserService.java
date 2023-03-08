@@ -4,7 +4,6 @@ import iti.jets.marketplace.dtos.UserDTO;
 import iti.jets.marketplace.exceptions.ResourceNotFoundException;
 import iti.jets.marketplace.mappers.UserMapper;
 import iti.jets.marketplace.repos.UserRepo;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +32,7 @@ public class UserService {
         try{
             userRepo.save(userMapper.map(userDTO));
         }catch(Exception e){
-
+        
         }
         
     }
