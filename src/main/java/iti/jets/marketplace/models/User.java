@@ -79,6 +79,7 @@ public class User  implements java.io.Serializable {
     @JoinColumn(name="addressId")
     public Address getAddress() {
         return this.address;
+
     }
     
 

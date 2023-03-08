@@ -24,6 +24,7 @@ public class UserController {
     UserDTO userDTO = userService.findUserById(id);
     response.setResponseBody("user found", HttpStatus.OK, userDTO);
     return response.getResponseBody();
+
   }
 
   @PatchMapping
