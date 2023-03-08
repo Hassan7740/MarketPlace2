@@ -17,9 +17,7 @@ public class SignUpServices {
 
     private final UserRepo userRepo ;
     private final UserMapper userMapper ;
-
     private final AddressMapper addressMapper ;
-
 
 
 
@@ -46,7 +44,7 @@ public class SignUpServices {
         }else{
             signUpDTO = null;
         }
-        
+
         return signUpDTO;
     }
 }

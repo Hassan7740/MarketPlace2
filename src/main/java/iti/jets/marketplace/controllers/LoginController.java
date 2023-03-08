@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import iti.jets.marketplace.dtos.LoginDTO;
+import iti.jets.marketplace.dtos.LoginResponceDTO;
 import iti.jets.marketplace.servcies.LoginService;
 import iti.jets.marketplace.utils.ResponseViewModel;
 
@@ -17,7 +18,7 @@ public class LoginController {
   LoginService loginService;
 
   @PostMapping
-  public ResponseViewModel login(@RequestBody LoginDTO lDto) {
+  public ResponseViewModel<LoginResponceDTO> login(@RequestBody LoginDTO lDto) {
 
     return loginService.userValidation(lDto);
 

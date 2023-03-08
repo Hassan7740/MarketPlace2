@@ -20,28 +20,30 @@ import iti.jets.marketplace.utils.ResponseViewModel;
 public class LoginService {
     @Autowired
     UserRepo re;
-    ResponseViewModel responseViewModel;
+    
     @Autowired
-    LoingResponceMapper loingResponceMapper ; 
+    LoingResponceMapper loingResponceMapper ;
+
     public LoginService() {
  
     }
 
-    public ResponseViewModel userValidation(LoginDTO ldto) {
-        responseViewModel = new ResponseViewModel();
+    public ResponseViewModel<LoginResponceDTO>userValidation(LoginDTO ldto) {
+         
        User u =(User) re.getUserByEmail(ldto.getEmail());
        
        if(u == null)
        {
-        responseViewModel.setResponseBody("user name or password in valid!",HttpStatus.valueOf(401),"invalid");
+       return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,null);
        }
        else if(u.getPassword().equals(ldto.getPassword()))
        {
-           responseViewModel.setResponseBody("logedin sucessfully",HttpStatus.valueOf(200),loingResponceMapper.map(u));
+        return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,loingResponceMapper.map(u));
        }else
        {
-        responseViewModel.setResponseBody(" in valid user name or password",HttpStatus.valueOf(401), "invalid");
+        return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,null);
+
        }
-        return responseViewModel;
+         
     }
 }
