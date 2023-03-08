@@ -48,23 +48,24 @@ public class ProductService {
         // response.setResponseBody("done",HttpStatus.valueOf(200),productDTO);
         // return response.getResponseBody();
         return ResponseViewModel.<ProductDTO>builder().data(productDTO).message("done").statusCode(HttpStatus.OK.value()).build();
+
     }
 
-    public ResponseViewModelBuilder<Object> deleteProductById(@PathVariable Integer id){
+    public ResponseViewModel<Object> deleteProductById(@PathVariable Integer id){
 		// responseViewModel = new ResponseViewModel();
 		Optional<Product> product = productRepo.findById(id);
 		if (product.isPresent()) {
 			productRepo.deleteById(id);
 			// response.setResponseBody("Product Deleted Successfully",HttpStatus.valueOf(200),"none");	
-            return ResponseViewModel.<Object>builder().data(null).message("Product Deleted Successfully").statusCode(HttpStatus.OK.value());
+            return ResponseViewModel.<Object>builder().data(null).message("Product Deleted Successfully").statusCode(HttpStatus.OK.value()).build();
 		}
 		else{
 			// response.setResponseBody("No such product",HttpStatus.valueOf(404),"none");	
-            return ResponseViewModel.<Object>builder().data(null).message("No such product").statusCode(HttpStatus.NOT_FOUND.value());
+            return ResponseViewModel.<Object>builder().data(null).message("No such product").statusCode(HttpStatus.NOT_FOUND.value()).build();
         }
     }
 
-    public ResponseViewModelBuilder<Object> updateProduct(ProductDTO productDTO){
+    public ResponseViewModel<Object> updateProduct(ProductDTO productDTO){
         // response = new ResponseViewModel();
         Optional<Product> productCheck = productRepo.findById(productDTO.getProductId());
         Optional<Product> ProductCategoryCheck = productRepo.findById(productDTO.getCategory().getCategoryId()); 
@@ -72,11 +73,11 @@ public class ProductService {
             Product product = productMapper.productDtoToProduct(productDTO);
             productRepo.save(product);
             // response.setResponseBody("product updated successfully",HttpStatus.valueOf(200),"none");	
-            return ResponseViewModel.<Object>builder().data(null).message("product updated successfully").statusCode(HttpStatus.OK.value());
+            return ResponseViewModel.<Object>builder().data(null).message("product updated successfully").statusCode(HttpStatus.OK.value()).build();
         }
         else{
             // response.setResponseBody("Couldn't update product",HttpStatus.valueOf(404),"none");	
-            return ResponseViewModel.<Object>builder().data(null).message("Couldn't update product").statusCode(HttpStatus.NOT_FOUND.value());
+            return ResponseViewModel.<Object>builder().data(null).message("Couldn't update product").statusCode(HttpStatus.NOT_FOUND.value()).build();
         }
         // return response;
     }
