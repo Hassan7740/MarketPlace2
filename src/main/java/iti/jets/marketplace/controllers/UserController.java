@@ -4,6 +4,8 @@ import iti.jets.marketplace.dtos.UserDTO;
 import iti.jets.marketplace.exceptions.ResourceNotFoundException;
 import iti.jets.marketplace.servcies.UserService;
 import iti.jets.marketplace.utils.ResponseViewModel;
+import iti.jets.marketplace.utils.ResponseViewModel.ResponseViewModelBuilder;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -13,25 +15,25 @@ import java.util.Map;
 public class UserController {
 
   private final UserService userService;
-  private ResponseViewModel response = new ResponseViewModel();
 
   public UserController(UserService userService) {
     this.userService = userService;
   }
 
   @GetMapping("{id}")
-  public Map findUserById(@PathVariable int id) throws ResourceNotFoundException {
+  public ResponseViewModel<UserDTO> findUserById(@PathVariable int id) throws ResourceNotFoundException {
     UserDTO userDTO = userService.findUserById(id);
-    response.setResponseBody("user found", HttpStatus.OK, userDTO);
-    return response.getResponseBody();
+    //response.setResponseBody("user found", HttpStatus.OK, userDTO);
+    return ResponseViewModel.<UserDTO>builder().data(userDTO).message("user found").statusCode(HttpStatus.ACCEPTED.value()).build();
 
   }
 
+  
   @PatchMapping
-  public Map updateUser(@RequestBody UserDTO userDTO) {
+  public ResponseViewModelBuilder<Object> updateUser(@RequestBody UserDTO userDTO) {
     userService.updateUser(userDTO);
-    response.setResponseBody("user updated successfully", HttpStatus.ACCEPTED, "Done");
-    return response.getResponseBody();
+    // response.setResponseBody("user updated successfully", HttpStatus.ACCEPTED, "Done");
+    return ResponseViewModel.<Object>builder().data(null).message("user updated").statusCode(HttpStatus.ACCEPTED.value());
   }
 
 }

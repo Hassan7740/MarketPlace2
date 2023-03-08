@@ -30,7 +30,13 @@ public class UserService {
     }
 
     public void updateUser(UserDTO userDTO) {
-        userRepo.save(userMapper.map(userDTO));
+        try{
+            userRepo.save(userMapper.map(userDTO));
+        }catch(Exception e){
+
+        }
+        
     }
+
     
 }

@@ -41,11 +41,9 @@ public class ProductService {
 
     public Map searchByName(String productName)
     {
-
         Product p = productRepo.findProductByproductName(productName);
         ProductDTO productDTO = productMapper.producToProductDto(p);
         response.setResponseBody("done",HttpStatus.valueOf(200),productDTO);
-
         return response.getResponseBody();
     }
 

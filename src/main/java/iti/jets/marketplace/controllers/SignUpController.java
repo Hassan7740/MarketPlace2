@@ -1,15 +1,14 @@
 package iti.jets.marketplace.controllers;
-import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import iti.jets.marketplace.servcies.SignUpServices;
 import iti.jets.marketplace.dtos.UserDTO;
 import iti.jets.marketplace.utils.ResponseViewModel;
-
 import java.util.Map;
 
 
@@ -20,7 +19,6 @@ public class SignUpController {
 
     private final SignUpServices signUpServices;
 
-    private ResponseViewModel responseViewModel = new ResponseViewModel();
 
     SignUpController(SignUpServices signUpServices){
         this.signUpServices = signUpServices;
