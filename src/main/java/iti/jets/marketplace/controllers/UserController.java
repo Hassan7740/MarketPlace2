@@ -12,25 +12,24 @@ import java.util.Map;
 public class UserController {
 
   private final UserService userService;
- private ResponseViewModel response = new ResponseViewModel();
+  private ResponseViewModel response = new ResponseViewModel();
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-
-    @GetMapping("{id}")
-  public Map findUserById(@PathVariable int id) {
-    UserDTO userDTO = userService.findUserById(id);
-   response.setResponseBody("user found", HttpStatus.OK, userDTO);
-    return response.getResponseBody();
+  public UserController(UserService userService) {
+    this.userService = userService;
   }
 
-    @PostMapping
-    public Map updateUser(@RequestBody  UserDTO userDTO){
-        userService.updateUser(userDTO);
-        response.setResponseBody("user updated successfully" , HttpStatus.ACCEPTED , "Done");
-        return response.getResponseBody();
+  @GetMapping("{id}")
+  public ResponseViewModel findUserById(@PathVariable int id) {
+    UserDTO userDTO = userService.findUserById(id);
+    response.setResponseBody("user found", HttpStatus.OK, userDTO);
+    return response;
+  }
+
+  @PostMapping
+  public Map updateUser(@RequestBody UserDTO userDTO) {
+    userService.updateUser(userDTO);
+    response.setResponseBody("user updated successfully", HttpStatus.ACCEPTED, "Done");
+    return response.getResponseBody();
   }
 
 }
