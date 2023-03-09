@@ -1,6 +1,8 @@
 package iti.jets.marketplace.controllers;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.security.web.server.authorization.HttpStatusServerAccessDeniedHandler;
 import org.springframework.web.bind.annotation.*;
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.models.Product;
@@ -15,7 +17,6 @@ public class ProductController {
     private final ProductService productService;
 
     
-
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
@@ -40,6 +41,12 @@ public class ProductController {
     @PatchMapping("/update")
       public ResponseViewModel<Object> updateProduct(@RequestBody ProductDTO productDTO){
       return productService.updateProduct(productDTO);
+    }
+
+    @GetMapping("/productFilter/{productName}/{categoryName}/{price}")
+    public ResponseViewModel<List<ProductDTO>> productFilter(@PathVariable String ProductName , @PathVariable String categoryName , @PathVariable float price ){
+      List<ProductDTO> productsDTO = productService.productFilter(ProductName, categoryName, price); 
+      return new ResponseViewModel<List<ProductDTO>>("done" , HttpStatus.OK.value() , productsDTO) ;
     }
     
     

@@ -23,4 +23,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     public Product getProductByproductId(int id);
 
+    // @Query(value="SELECT * FROM marketplacedb.product right outer join marketplacedb.category on product.categoryId = 1 where categoryName = 'clothes' and price = 100 ;",nativeQuery =true)
+    @Query("SELECT p FROM Product p  where p.category.categoryName = :categoryName and p.price = :price ")
+    public List<Product> productFilter(String productName , String categoryName , float price);
 }

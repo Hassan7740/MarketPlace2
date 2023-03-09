@@ -2,9 +2,6 @@ package iti.jets.marketplace.mappers;
 
 
 import org.mapstruct.Mapper;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-
 import iti.jets.marketplace.dtos.UserorderproductDTO;
 import iti.jets.marketplace.models.Userorderproduct;
 

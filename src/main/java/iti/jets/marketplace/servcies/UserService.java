@@ -5,14 +5,10 @@ import iti.jets.marketplace.exceptions.ResourceNotFoundException;
 import iti.jets.marketplace.mappers.UserMapper;
 import iti.jets.marketplace.models.User;
 import iti.jets.marketplace.repos.UserRepo;
-import iti.jets.marketplace.utils.ResponseViewModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
-
 public class UserService {
     private final UserRepo userRepo;
     private final UserMapper userMapper;

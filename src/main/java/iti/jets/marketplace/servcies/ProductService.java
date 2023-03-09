@@ -1,14 +1,10 @@
 package iti.jets.marketplace.servcies;
 
 import java.util.Optional;
-
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.mappers.ProductMapper;
 import iti.jets.marketplace.models.Product;
@@ -35,7 +31,7 @@ public class ProductService {
         return ResponseViewModel.<Product>builder().data(p).message("Product added successfully").statusCode(HttpStatus.OK.value()).build();
     }
 
-    public ResponseViewModel<List<ProductDTO>> searchByName(String productName)
+    public ResponseViewModel<List<ProductDTO>>searchByName(String productName)
     {
         List<Product> p = productRepo.findProductByproductName(productName);
 
@@ -84,6 +80,12 @@ public class ProductService {
         else{
             return ResponseViewModel.<Object>builder().data(null).message("Couldn't update product").statusCode(HttpStatus.NOT_FOUND.value()).build();
         }
+    }
+
+    public List<ProductDTO> productFilter (String productName , String categoryName , float price ){
+        List<Product> products = productRepo.productFilter(productName, categoryName, price);
+        List<ProductDTO> productsDTO = productMapper.toDTOList(products);
+        return productsDTO ;
     }
 
 }

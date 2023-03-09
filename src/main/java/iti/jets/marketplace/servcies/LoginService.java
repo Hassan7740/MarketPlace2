@@ -1,12 +1,8 @@
 package iti.jets.marketplace.servcies;
 
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import iti.jets.marketplace.dtos.LoginDTO;
 import iti.jets.marketplace.dtos.LoginResponceDTO;
@@ -17,7 +13,7 @@ import iti.jets.marketplace.utils.ResponseViewModel;
 
  
 
-@Component
+@Service
 public class LoginService {
     @Autowired
     UserRepo re;
