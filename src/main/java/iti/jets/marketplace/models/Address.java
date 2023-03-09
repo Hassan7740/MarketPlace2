@@ -42,7 +42,7 @@ public class Address  implements java.io.Serializable {
        this.street = street;
        this.buildNo = buildNo;
        this.floorNo = floorNo;
-       this.users = users;
+    //    this.users = users;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)

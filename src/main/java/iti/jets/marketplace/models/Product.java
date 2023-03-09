@@ -68,8 +68,8 @@ public class Product  implements java.io.Serializable {
         this.productId = productId;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="categoryId", nullable=false)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="categoryId")
     public Category getCategory() {
         return this.category;
     }

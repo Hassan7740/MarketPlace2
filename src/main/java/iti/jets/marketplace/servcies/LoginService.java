@@ -3,6 +3,7 @@ package iti.jets.marketplace.servcies;
 import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,9 @@ public class LoginService {
     
     @Autowired
     LoingResponceMapper loingResponceMapper ;
+    
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
 
     public LoginService() {
  
@@ -31,14 +35,15 @@ public class LoginService {
     public ResponseViewModel<LoginResponceDTO>userValidation(LoginDTO ldto) {
          
        User u =(User) re.getUserByEmail(ldto.getEmail());
+    //    String hsing = encoder.encode(ldto.getPassword());
        
        if(u == null)
        {
        return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,null);
        }
-       else if(u.getPassword().equals(ldto.getPassword()))
+       else if(encoder.matches(ldto.getPassword(), u.getPassword()))
        {
-        return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,loingResponceMapper.map(u));
+        return  new ResponseViewModel<LoginResponceDTO>("login Sucessfully",200,loingResponceMapper.map(u));
        }else
        {
         return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,null);
