@@ -1,27 +1,25 @@
 package iti.jets.marketplace.controllers;
 
-import org.apache.catalina.connector.Response;
+import org.apache.logging.log4j.core.impl.ReusableLogEventFactory;
+import org.hibernate.engine.transaction.jta.platform.internal.ResinJtaPlatform;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import iti.jets.marketplace.dtos.AmountDTO;
-import iti.jets.marketplace.servcies.BuyProductService;
+import iti.jets.marketplace.servcies.AddAmountService;
 import iti.jets.marketplace.utils.ResponseViewModel;
 
 @RestController
-@RequestMapping("/buy")
-public class BuyProductController {
+@RequestMapping("/add")
+public class AddAmountController {
     @Autowired
-    BuyProductService buyProductService;
+    AddAmountService addAmountService;
+
     @PostMapping
-    public ResponseViewModel<AmountDTO> buyProduct(@RequestBody AmountDTO buyProductDTO)
-    {
-           
-           return buyProductService.getProdcutNumber(buyProductDTO);
-    } 
+    public ResponseViewModel<AmountDTO> setAdditionalAmount(@RequestBody AmountDTO amountDTO) {
+        return addAmountService.addAmount(amountDTO);
+    }
 }
