@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import iti.jets.marketplace.models.Product;
+import lombok.val;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     public Product getProductByproductId(int id);
 
     // @Query(value="SELECT * FROM marketplacedb.product right outer join marketplacedb.category on product.categoryId = 1 where categoryName = 'clothes' and price = 100 ;",nativeQuery =true)
-    @Query("SELECT p FROM Product p  where p.category.categoryName = :categoryName and p.price = :price ")
-    public List<Product> productFilter(String productName , String categoryName , float price);
+    @Query("SELECT p FROM Product p  where p.productName = :productName and  p.category.categoryName = :categoryName and p.price = :price ")
+    public List<Product> productFilter(@Param(value = "productName") String productName ,@Param(value = "categoryName") String categoryName ,@Param(value = "price") float price);
 }

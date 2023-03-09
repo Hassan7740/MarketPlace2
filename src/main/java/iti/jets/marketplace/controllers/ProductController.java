@@ -43,9 +43,9 @@ public class ProductController {
       return productService.updateProduct(productDTO);
     }
 
-    @GetMapping("/productFilter/{productName}/{categoryName}/{price}")
-    public ResponseViewModel<List<ProductDTO>> productFilter(@PathVariable String ProductName , @PathVariable String categoryName , @PathVariable float price ){
-      List<ProductDTO> productsDTO = productService.productFilter(ProductName, categoryName, price); 
+    @GetMapping("/filter/{productName}/{categoryName}/{price}")
+    public ResponseViewModel<List<ProductDTO>> productFilter(@PathVariable String productName , @PathVariable String categoryName , @PathVariable float price ){
+      List<ProductDTO> productsDTO = productService.productFilter(productName, categoryName, price); 
       return new ResponseViewModel<List<ProductDTO>>("done" , HttpStatus.OK.value() , productsDTO) ;
     }
     
