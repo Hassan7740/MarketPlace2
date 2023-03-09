@@ -14,8 +14,7 @@ import iti.jets.marketplace.mappers.ProductMapper;
 import iti.jets.marketplace.models.Product;
 import iti.jets.marketplace.repos.ProductRepo;
 import iti.jets.marketplace.utils.ResponseViewModel;
-import iti.jets.marketplace.utils.ResponseViewModel;
-import iti.jets.marketplace.utils.ResponseViewModel.ResponseViewModelBuilder;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -23,7 +22,6 @@ public class ProductService {
     @Autowired
     private final ProductRepo productRepo;
     private final ProductMapper productMapper;
-    // private ResponseViewModel response = new ResponseViewModel();
 
     public ProductService(ProductRepo productRepo, ProductMapper productMapper) {
         this.productRepo = productRepo;
@@ -33,52 +31,59 @@ public class ProductService {
     public ResponseViewModel<Product> add(ProductDTO productDTO)
     {
         Product p = productMapper.productDtoToProduct(productDTO);
-
         productRepo.saveAndFlush(p);
-
-        // response.setResponseBody("Product added successfully", HttpStatus.OK , p);
-        // return response.getResponseBody();
         return ResponseViewModel.<Product>builder().data(p).message("Product added successfully").statusCode(HttpStatus.OK.value()).build();
     }
 
-    public ResponseViewModel<ProductDTO> searchByName(String productName)
+    public ResponseViewModel<List<ProductDTO>> searchByName(String productName)
     {
-        Product p = productRepo.findProductByproductName(productName);
-        ProductDTO productDTO = productMapper.producToProductDto(p);
-        // response.setResponseBody("done",HttpStatus.valueOf(200),productDTO);
-        // return response.getResponseBody();
-        return ResponseViewModel.<ProductDTO>builder().data(productDTO).message("done").statusCode(HttpStatus.OK.value()).build();
+        List<Product> p = productRepo.findProductByproductName(productName);
+
+        if(!p.isEmpty()){
+            List<ProductDTO> productDTO = productMapper.toDTOList(p);
+            // ProductDTO productDTO = productMapper.producToProductDto(p);
+            return ResponseViewModel.<List<ProductDTO>>builder().data(productDTO).message("get All Proudct with name : " + productName ).statusCode(HttpStatus.OK.value()).build();
+
+        }
+        return ResponseViewModel.<List<ProductDTO>>builder().data(null).message("Not Found Product : " + productName).statusCode(HttpStatus.NOT_FOUND.value()).build();
+
+        
+    }
+    public ResponseViewModel<ProductDTO> searchById(int id){
+                Product product = productRepo.getProductByproductId(id);
+
+                if(product != null){
+                    ProductDTO productDTO = productMapper.producToProductDto(product);
+                    return ResponseViewModel.<ProductDTO>builder().data(productDTO).message("Get data for user Successfully").statusCode(HttpStatus.OK.value()).build();
+                }
+                    return ResponseViewModel.<ProductDTO>builder().data(null).message("User Not Found").statusCode(HttpStatus.NOT_FOUND.value()).build();
+                    
     }
 
-    public ResponseViewModelBuilder<Object> deleteProductById(@PathVariable Integer id){
+    public ResponseViewModel<Object> deleteProductById(@PathVariable Integer id){
 		// responseViewModel = new ResponseViewModel();
 		Optional<Product> product = productRepo.findById(id);
 		if (product.isPresent()) {
 			productRepo.deleteById(id);
-			// response.setResponseBody("Product Deleted Successfully",HttpStatus.valueOf(200),"none");	
-            return ResponseViewModel.<Object>builder().data(null).message("Product Deleted Successfully").statusCode(HttpStatus.OK.value());
+            return ResponseViewModel.<Object>builder().data(null).message("Product Deleted Successfully").statusCode(HttpStatus.OK.value()).build();
 		}
 		else{
-			// response.setResponseBody("No such product",HttpStatus.valueOf(404),"none");	
-            return ResponseViewModel.<Object>builder().data(null).message("No such product").statusCode(HttpStatus.NOT_FOUND.value());
+            return ResponseViewModel.<Object>builder().data(null).message("No such product").statusCode(HttpStatus.NOT_FOUND.value()).build();
         }
     }
 
-    public ResponseViewModelBuilder<Object> updateProduct(ProductDTO productDTO){
+    public ResponseViewModel<Object> updateProduct(ProductDTO productDTO){
         // response = new ResponseViewModel();
         Optional<Product> productCheck = productRepo.findById(productDTO.getProductId());
         Optional<Product> ProductCategoryCheck = productRepo.findById(productDTO.getCategory().getCategoryId()); 
         if(productCheck.isPresent() && ProductCategoryCheck.isPresent()){
             Product product = productMapper.productDtoToProduct(productDTO);
             productRepo.save(product);
-            // response.setResponseBody("product updated successfully",HttpStatus.valueOf(200),"none");	
-            return ResponseViewModel.<Object>builder().data(null).message("product updated successfully").statusCode(HttpStatus.OK.value());
+            return ResponseViewModel.<Object>builder().data(null).message("product updated successfully").statusCode(HttpStatus.OK.value()).build();
         }
         else{
-            // response.setResponseBody("Couldn't update product",HttpStatus.valueOf(404),"none");	
-            return ResponseViewModel.<Object>builder().data(null).message("Couldn't update product").statusCode(HttpStatus.NOT_FOUND.value());
+            return ResponseViewModel.<Object>builder().data(null).message("Couldn't update product").statusCode(HttpStatus.NOT_FOUND.value()).build();
         }
-        // return response;
     }
 
 }

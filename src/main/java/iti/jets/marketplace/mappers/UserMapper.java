@@ -5,12 +5,14 @@ import iti.jets.marketplace.models.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
-@Mapper(componentModel = "spring" , nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-@Component
+@Mapper(componentModel = "spring")
 public interface UserMapper {
     UserDTO map(User user);
     User map(UserDTO userDTO);
+
+    List<UserDTO> map(List<User> allUsers);
 }
