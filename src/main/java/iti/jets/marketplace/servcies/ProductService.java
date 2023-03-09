@@ -10,6 +10,7 @@ import iti.jets.marketplace.mappers.ProductMapper;
 import iti.jets.marketplace.models.Product;
 import iti.jets.marketplace.repos.ProductRepo;
 import iti.jets.marketplace.utils.ResponseViewModel;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -30,12 +31,29 @@ public class ProductService {
         return ResponseViewModel.<Product>builder().data(p).message("Product added successfully").statusCode(HttpStatus.OK.value()).build();
     }
 
-    public ResponseViewModel<ProductDTO> searchByName(String productName)
+    public ResponseViewModel<List<ProductDTO>>searchByName(String productName)
     {
-        Product p = productRepo.findProductByproductName(productName);
-        ProductDTO productDTO = productMapper.producToProductDto(p);
-        return ResponseViewModel.<ProductDTO>builder().data(productDTO).message("done").statusCode(HttpStatus.OK.value()).build();
+        List<Product> p = productRepo.findProductByproductName(productName);
 
+        if(!p.isEmpty()){
+            List<ProductDTO> productDTO = productMapper.toDTOList(p);
+            // ProductDTO productDTO = productMapper.producToProductDto(p);
+            return ResponseViewModel.<List<ProductDTO>>builder().data(productDTO).message("get All Proudct with name : " + productName ).statusCode(HttpStatus.OK.value()).build();
+
+        }
+        return ResponseViewModel.<List<ProductDTO>>builder().data(null).message("Not Found Product : " + productName).statusCode(HttpStatus.NOT_FOUND.value()).build();
+
+        
+    }
+    public ResponseViewModel<ProductDTO> searchById(int id){
+                Product product = productRepo.getProductByproductId(id);
+
+                if(product != null){
+                    ProductDTO productDTO = productMapper.producToProductDto(product);
+                    return ResponseViewModel.<ProductDTO>builder().data(productDTO).message("Get data for user Successfully").statusCode(HttpStatus.OK.value()).build();
+                }
+                    return ResponseViewModel.<ProductDTO>builder().data(null).message("User Not Found").statusCode(HttpStatus.NOT_FOUND.value()).build();
+                    
     }
 
     public ResponseViewModel<Object> deleteProductById(@PathVariable Integer id){
@@ -60,6 +78,24 @@ public class ProductService {
         else{
             return ResponseViewModel.<Object>builder().data(null).message("Couldn't update product").statusCode(HttpStatus.NOT_FOUND.value()).build();
         }
+    }
+
+    public List<ProductDTO> productFilter (String productName , String categoryName , float price ){
+        List<Product> products = productRepo.productFilter(productName, categoryName, price);
+        List<ProductDTO> productsDTO = productMapper.toDTOList(products);
+        return productsDTO ;
+    }
+
+    public List<ProductDTO> filterByCategoryName(String categoryName) {
+        List<Product> products = productRepo.productFilterByCategoryName(categoryName);
+        List<ProductDTO> productsDTO = productMapper.toDTOList(products);
+        return productsDTO ;
+    }
+
+    public List<ProductDTO> filterByPrice(float price) {
+        List<Product> products = productRepo.productFilterByPrice(price);
+        List<ProductDTO> productsDTO = productMapper.toDTOList(products);
+        return productsDTO ;
     }
 
 }

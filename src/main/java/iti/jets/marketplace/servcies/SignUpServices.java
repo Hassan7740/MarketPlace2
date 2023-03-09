@@ -5,21 +5,17 @@ import iti.jets.marketplace.mappers.AddressMapper;
 import iti.jets.marketplace.mappers.UserMapper;
 import iti.jets.marketplace.models.Address;
 import iti.jets.marketplace.repos.UserRepo;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import iti.jets.marketplace.utils.ResponseViewModel;
 import iti.jets.marketplace.models.User;
-
-
 
 @Service
 public class SignUpServices {
 
-    private final UserRepo userRepo ;
-    private final UserMapper userMapper ;
-    private final AddressMapper addressMapper ;
-
-
+    private final UserRepo userRepo;
+    private final UserMapper userMapper;
+    private final AddressMapper addressMapper;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public SignUpServices(UserRepo userRepo, UserMapper userMapper, AddressMapper addressMapper) {
         this.userRepo = userRepo;
@@ -27,21 +23,22 @@ public class SignUpServices {
         this.addressMapper = addressMapper;
     }
 
-    
-    public UserDTO saveUser(UserDTO signUpDTO){
+    public UserDTO saveUser(UserDTO signUpDTO) {
 
-        if(userRepo.getUserByEmail(signUpDTO.getEmail()) == null){
+        if (userRepo.getUserByEmail(signUpDTO.getEmail()) == null) {
+
             Address address = addressMapper.map(signUpDTO.getAddress());
             address.setUsers(null);
+
             User user = userMapper.map(signUpDTO);
             user.setAddress(address);
+            user.setPassword(encoder.encode(signUpDTO.getPassword()));
             user.setType("customer");
             userRepo.save(user);
-            user.setPassword(null);
 
             signUpDTO = userMapper.map(user);
 
-        }else{
+        } else {
             signUpDTO = null;
         }
 

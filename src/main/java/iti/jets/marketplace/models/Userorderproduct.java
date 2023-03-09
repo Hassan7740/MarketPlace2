@@ -1,14 +1,14 @@
 // default package
-// Generated Mar 4, 2023, 11:48:59 PM by Hibernate Tools 6.0.0.Alpha3
+// Generated Mar 9, 2023, 5:50:18 PM by Hibernate Tools 6.0.0.Alpha3
 package iti.jets.marketplace.models;
 
 import java.util.Date;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -25,7 +25,7 @@ import jakarta.persistence.TemporalType;
 public class Userorderproduct  implements java.io.Serializable {
 
 
-     private UserorderproductId id;
+     private Integer userorderproductId;
      private Product product;
      private User user;
      private String status;
@@ -36,13 +36,11 @@ public class Userorderproduct  implements java.io.Serializable {
     }
 
 	
-    public Userorderproduct(UserorderproductId id, Product product, User user) {
-        this.id = id;
+    public Userorderproduct(Product product, User user) {
         this.product = product;
         this.user = user;
     }
-    public Userorderproduct(UserorderproductId id, Product product, User user, String status, Integer productCount, Date orderDate) {
-       this.id = id;
+    public Userorderproduct(Product product, User user, String status, Integer productCount, Date orderDate) {
        this.product = product;
        this.user = user;
        this.status = status;
@@ -50,22 +48,20 @@ public class Userorderproduct  implements java.io.Serializable {
        this.orderDate = orderDate;
     }
    
-     @EmbeddedId
+     @Id @GeneratedValue(strategy=IDENTITY)
 
     
-    @AttributeOverrides( {
-        @AttributeOverride(name="userId", column=@Column(name="userId", nullable=false) ), 
-        @AttributeOverride(name="productId", column=@Column(name="productId", nullable=false) ) } )
-    public UserorderproductId getId() {
-        return this.id;
+    @Column(name="userorderproductId", unique=true, nullable=false)
+    public Integer getUserorderproductId() {
+        return this.userorderproductId;
     }
     
-    public void setId(UserorderproductId id) {
-        this.id = id;
+    public void setUserorderproductId(Integer userorderproductId) {
+        this.userorderproductId = userorderproductId;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="productId", nullable=false, insertable=false, updatable=false)
+    @JoinColumn(name="productId", nullable=false)
     public Product getProduct() {
         return this.product;
     }
@@ -75,7 +71,7 @@ public class Userorderproduct  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="userId", nullable=false, insertable=false, updatable=false)
+    @JoinColumn(name="userId", nullable=false)
     public User getUser() {
         return this.user;
     }

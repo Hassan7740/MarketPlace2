@@ -1,12 +1,13 @@
 package iti.jets.marketplace.utils;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
 
 @Data
-@Value
 @Builder
+@Value
 @AllArgsConstructor
 public class ResponseViewModel<T> {
     private String message;
