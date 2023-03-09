@@ -16,7 +16,7 @@ public class ProductPageController {
   }
 
   @GetMapping("product/{id}")
-  public ResponseViewModel<ProductDTO> searchProductByName(@PathVariable int id) {
+  public ResponseViewModel<ProductDTO> searchProductById(@PathVariable int id) {
     return productService.searchById(id);
   }
 
