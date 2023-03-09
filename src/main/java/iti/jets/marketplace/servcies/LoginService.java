@@ -38,7 +38,7 @@ public class LoginService {
        }
        else if(u.getPassword().equals(ldto.getPassword()))
        {
-        return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,loingResponceMapper.map(u));
+        return  new ResponseViewModel<LoginResponceDTO>("login Sucessfully",200,loingResponceMapper.map(u));
        }else
        {
         return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,null);
