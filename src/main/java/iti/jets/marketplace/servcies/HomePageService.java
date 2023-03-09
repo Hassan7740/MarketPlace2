@@ -41,16 +41,17 @@ public class HomePageService {
         listCatDTO = new ArrayList<>();
 
         Optional<User> userOp = userRepo.findById(id);
-        if (!userOp.isPresent()) {
-           return new ResponseViewModel<HomePageDTO>("The user not found ",401, null);
-        }
-
         for (Category c : categoryList) {
             listCatDTO.add(catMapper.map(c));
+        }
+        if (!userOp.isPresent()) {
+            homePageDTO.setCategoryDTO(listCatDTO);
+            homePageDTO.setUserDTO(null);
+            return new ResponseViewModel<HomePageDTO>("The user not found ", 401, homePageDTO);
         }
         userDTO = userMapper.map(userOp.get());
         homePageDTO.setCategoryDTO(listCatDTO);
         homePageDTO.setUserDTO(userDTO);
-        return new ResponseViewModel<HomePageDTO>("HomePage",200,homePageDTO);
+        return new ResponseViewModel<HomePageDTO>("HomePage", 200, homePageDTO);
     }
 }

@@ -18,7 +18,7 @@ public class HomePageController {
     HomePageService homePageService;
 
     @GetMapping("{id}")
-    public ResponseViewModel<HomePageDTO    > getHomePage(@PathVariable Integer id) {
+    public ResponseViewModel<HomePageDTO > getHomePage(@PathVariable Integer id) {
         return homePageService.getHomePage(id);
     }
 
