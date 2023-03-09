@@ -1,9 +1,9 @@
-// package iti.jets.marketplace.repos;
+package iti.jets.marketplace.repos;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-// import iti.jets.marketplace.models.Userorderproduct;
+import iti.jets.marketplace.models.Userorderproduct;
 
-// public interface OrderStatusRepo extends JpaRepository<Userorderproduct,Integer> {
+public interface OrderStatusRepo extends JpaRepository<Userorderproduct,Integer> {
 	
-// }
+}

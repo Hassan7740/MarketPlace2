@@ -49,7 +49,7 @@ public class ProductService {
                 Product product = productRepo.getProductByproductId(id);
 
                 if(product != null){
-                    ProductDTO productDTO = productMapper.producToProductDto(product);
+                    ProductDTO productDTO = productMapper.productToProductDto(product);
                     return ResponseViewModel.<ProductDTO>builder().data(productDTO).message("Get data for user Successfully").statusCode(HttpStatus.OK.value()).build();
                 }
                     return ResponseViewModel.<ProductDTO>builder().data(null).message("User Not Found").statusCode(HttpStatus.NOT_FOUND.value()).build();

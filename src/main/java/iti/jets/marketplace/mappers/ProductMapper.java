@@ -10,7 +10,7 @@ import iti.jets.marketplace.models.Product;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
     
-    ProductDTO producToProductDto(Product product);
+    ProductDTO productToProductDto(Product product);
     Product productDtoToProduct(ProductDTO productDTO);
     List<ProductDTO> toDTOList(List<Product> products);
 }
