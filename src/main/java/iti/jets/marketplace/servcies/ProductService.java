@@ -88,4 +88,16 @@ public class ProductService {
         return productsDTO ;
     }
 
+    public List<ProductDTO> filterByCategoryName(String categoryName) {
+        List<Product> products = productRepo.productFilterByCategoryName(categoryName);
+        List<ProductDTO> productsDTO = productMapper.toDTOList(products);
+        return productsDTO ;
+    }
+
+    public List<ProductDTO> filterByPrice(float price) {
+        List<Product> products = productRepo.productFilterByPrice(price);
+        List<ProductDTO> productsDTO = productMapper.toDTOList(products);
+        return productsDTO ;
+    }
+
 }

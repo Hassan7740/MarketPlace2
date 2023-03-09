@@ -48,6 +48,18 @@ public class ProductController {
       List<ProductDTO> productsDTO = productService.productFilter(productName, categoryName, price); 
       return new ResponseViewModel<List<ProductDTO>>("done" , HttpStatus.OK.value() , productsDTO) ;
     }
+
+    @GetMapping("/{categoryName}")
+    public ResponseViewModel<List<ProductDTO>> productFilterByCategoryName( @PathVariable String categoryName){
+      List<ProductDTO> productsDTO = productService.filterByCategoryName(categoryName); 
+      return new ResponseViewModel<List<ProductDTO>>("done" , HttpStatus.OK.value() , productsDTO) ;
+    }
+
+    @GetMapping("/{price}")
+    public ResponseViewModel<List<ProductDTO>> productFilterByPrice(@PathVariable float price ){
+      List<ProductDTO> productsDTO = productService.filterByPrice(price); 
+      return new ResponseViewModel<List<ProductDTO>>("done" , HttpStatus.OK.value() , productsDTO) ;
+    }
     
     
 }

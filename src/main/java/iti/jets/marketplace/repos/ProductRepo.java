@@ -28,4 +28,10 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     // @Query(value="SELECT * FROM marketplacedb.product right outer join marketplacedb.category on product.categoryId = 1 where categoryName = 'clothes' and price = 100 ;",nativeQuery =true)
     @Query("SELECT p FROM Product p  where p.productName = :productName and  p.category.categoryName = :categoryName and p.price = :price ")
     public List<Product> productFilter(@Param(value = "productName") String productName ,@Param(value = "categoryName") String categoryName ,@Param(value = "price") float price);
+    
+    @Query("SELECT p FROM Product p  where p.category.categoryName = :categoryName")
+    public List<Product> productFilterByCategoryName(@Param(value = "categoryName") String categoryName);
+    
+    @Query("SELECT p FROM Product p  where p.price = :price ")
+    public List<Product> productFilterByPrice(@Param(value = "price") float price);
 }
