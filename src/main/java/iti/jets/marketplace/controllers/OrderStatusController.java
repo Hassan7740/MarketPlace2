@@ -1,5 +1,7 @@
 package iti.jets.marketplace.controllers;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import iti.jets.marketplace.dtos.UserorderproductDTO;
+import iti.jets.marketplace.models.Userorderproduct;
 import iti.jets.marketplace.servcies.OrderStatusService;
 import iti.jets.marketplace.utils.ResponseViewModel;
 
@@ -18,11 +21,16 @@ public class OrderStatusController {
 	public OrderStatusController(OrderStatusService orderStatusService){
 		this.orderStatusService = orderStatusService;
 	}
-
 	@PostMapping
-	public ResponseViewModel<Object> addToCart(@RequestBody UserorderproductDTO userorderproductDTO){
-		
+	public ResponseViewModel<Userorderproduct> addToCart(@RequestBody UserorderproductDTO userorderproductDTO){
 		return orderStatusService.addToCart(userorderproductDTO);
 	}
+
+
+	// @PostMapping
+	// public ResponseViewModel<List<Userorderproduct>> addToCart(@RequestBody List<UserorderproductDTO> userorderproductDTO){
+		
+	// 	return orderStatusService.addToCart(userorderproductDTO);
+	// }
 
 }

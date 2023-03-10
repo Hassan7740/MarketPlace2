@@ -1,5 +1,7 @@
 package iti.jets.marketplace.servcies;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,15 @@ public class OrderStatusService {
 		this.userorderproductMapper = userorderproductMapper;
 	}
 
-	public ResponseViewModel<Object> addToCart(UserorderproductDTO userorderproductDTO){
+	public ResponseViewModel<Userorderproduct> addToCart(UserorderproductDTO userorderproductDTO){
 		Userorderproduct userorderproduct = userorderproductMapper.map(userorderproductDTO);
 		orderStatusRepo.saveAndFlush(userorderproduct);
-		return ResponseViewModel.<Object>builder().data(null).message("Added to Cart").statusCode(HttpStatus.OK.value()).build();
+		return ResponseViewModel.<Userorderproduct>builder().data(userorderproduct).message("Added to Cart").statusCode(HttpStatus.OK.value()).build();
 	}
+
+	// public ResponseViewModel<List<Userorderproduct>> addToCart(List<UserorderproductDTO> userorderproductDTO){
+	// 	List<Userorderproduct> userorderproduct = userorderproductMapper.DTOtoEnt(userorderproductDTO);
+	// 	orderStatusRepo.saveAllAndFlush(userorderproduct);
+	// 	return ResponseViewModel.<List<Userorderproduct>>builder().data(userorderproduct).message("Added to Cart").statusCode(HttpStatus.OK.value()).build();
+	// }
 }

@@ -14,9 +14,9 @@ public interface UserorderproductMapper {
 
     Userorderproduct map(UserorderproductDTO userorderproductDTO);
 
-    List<UserorderproductDTO> DTOtoEnt(List<Userorderproduct> userorderproduct);
+    List<UserorderproductDTO> EntToDTO(List<Userorderproduct> userorderproduct);
 
-    List<Userorderproduct> EntToDTO(List<UserorderproductDTO> userorderproductDTO);
+    List<Userorderproduct> DTOtoEnt(List<UserorderproductDTO> userorderproductDTO);
 
     
     
