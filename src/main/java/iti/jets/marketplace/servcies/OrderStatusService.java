@@ -38,22 +38,34 @@ public class OrderStatusService {
 	// 	return ResponseViewModel.<List<Userorderproduct>>builder().data(userorderproduct).message("Added to Cart").statusCode(HttpStatus.OK.value()).build();
 	// }
 
-	public ResponseViewModel<Userorderproduct> checkout(UserorderproductDTO userorderproductDTO){
-		// Userorderproduct userorderproduct;
-		Optional<Userorderproduct> productCheck = orderStatusRepo.findById(userorderproductDTO.getProduct().getProductId());
-		Optional<Userorderproduct> userCheck =  orderStatusRepo.findById(userorderproductDTO.getUser().getUserId());
-		// Optional<Userorderproduct> dateCheck =  orderStatusRepo.findByOrderDate(userorderproductDTO.getOrderDate());
-		Optional<Userorderproduct> statusCheck =  orderStatusRepo.findByStatus(userorderproductDTO.getStatus());
-		// Optional<Userorderproduct> orderCheck =  orderStatusRepo.getByuserorderproductId(userorderproduct.getUserorderproductId());
-
-		if(productCheck.isPresent() && userCheck.isPresent() && statusCheck.equals("cart")){
-			userorderproductDTO.setStatus("checkout");
-			Userorderproduct userorderproduct = userorderproductMapper.map(userorderproductDTO);
-			orderStatusRepo.saveAndFlush(userorderproduct);
-			return ResponseViewModel.<Userorderproduct>builder().data(userorderproduct).message("Added to Checkout").statusCode(HttpStatus.OK.value()).build();
+	public ResponseViewModel<Object> checkout(List<UserorderproductDTO> userorderproductDTO){
+		for (UserorderproductDTO userorderproductDTO2 : userorderproductDTO) {
+			orderStatusRepo.updateOrderStatus("checkout",userorderproductDTO2.getUser().getUserId());
 		}
-		else{
-			return ResponseViewModel.<Userorderproduct>builder().data(null).message("Can't checkout product").statusCode(HttpStatus.OK.value()).build();
-		}
+		return ResponseViewModel.<Object>builder().data(null).message("Added to Checkout").statusCode(HttpStatus.OK.value()).build();
 	}
+
+	// public ResponseViewModel<Object> checkout(List<UserorderproductDTO> userorderproductDTO){
+	// 	// Userorderproduct userorderproduct;
+	// 	// Optional<Userorderproduct> productCheck = orderStatusRepo.findById(userorderproductDTO.getProduct().getProductId());
+	// 	// Optional<Userorderproduct> userCheck =  orderStatusRepo.findById(userorderproductDTO.getUser().getUserId());
+	// 	// Optional<Userorderproduct> dateCheck =  orderStatusRepo.findByOrderDate(userorderproductDTO.getOrderDate());
+	// 	// Optional<Userorderproduct> statusCheck =  orderStatusRepo.findByStatus(userorderproductDTO.getStatus());
+	// 	// Optional<Userorderproduct> orderCheck =  orderStatusRepo.getByuserorderproductId(userorderproduct.getUserorderproductId());
+
+	// 	// if(productCheck.isPresent() && userCheck.isPresent()){
+	// 		for (UserorderproductDTO userorderproductDTO2 : userorderproductDTO) {
+	// 			// userorderproductDTO2.setStatus("checkout");
+	// 			// List<Userorderproduct> userorderproduct3 = userorderproductMapper.DTOtoEnt(userorderproductDTO);
+	// 			// orderStatusRepo.saveAll(userorderproductMapper.DTOtoEnt(userorderproductDTO));
+	// 			orderStatusRepo.updateOrderStatus("checkout",userorderproductDTO2.getUser().getUserId());
+	// 		}
+	// 		// userorderproductDTO.setStatus("checkout");
+	
+	// 		return ResponseViewModel.<Object>builder().data(null).message("Added to Checkout").statusCode(HttpStatus.OK.value()).build();
+	// 	// }
+	// 	// else{
+	// 	// 	return ResponseViewModel.<Userorderproduct>builder().data(null).message("Can't checkout product").statusCode(HttpStatus.OK.value()).build();
+	// 	// }
+	// }
 }

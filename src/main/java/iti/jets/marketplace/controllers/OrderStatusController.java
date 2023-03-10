@@ -34,7 +34,7 @@ public class OrderStatusController {
 	// }
 
 	@PatchMapping("/checkout")
-	public ResponseViewModel<Userorderproduct> checkout(@RequestBody UserorderproductDTO userorderproductDTO){
+	public ResponseViewModel<Object> checkout(@RequestBody List<UserorderproductDTO> userorderproductDTO){
 		return orderStatusService.checkout(userorderproductDTO);
 
 	}
