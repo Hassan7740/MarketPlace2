@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.dtos.UserorderproductDTO;
@@ -45,27 +46,15 @@ public class OrderStatusService {
 		return ResponseViewModel.<Object>builder().data(null).message("Added to Checkout").statusCode(HttpStatus.OK.value()).build();
 	}
 
-	// public ResponseViewModel<Object> checkout(List<UserorderproductDTO> userorderproductDTO){
-	// 	// Userorderproduct userorderproduct;
-	// 	// Optional<Userorderproduct> productCheck = orderStatusRepo.findById(userorderproductDTO.getProduct().getProductId());
-	// 	// Optional<Userorderproduct> userCheck =  orderStatusRepo.findById(userorderproductDTO.getUser().getUserId());
-	// 	// Optional<Userorderproduct> dateCheck =  orderStatusRepo.findByOrderDate(userorderproductDTO.getOrderDate());
-	// 	// Optional<Userorderproduct> statusCheck =  orderStatusRepo.findByStatus(userorderproductDTO.getStatus());
-	// 	// Optional<Userorderproduct> orderCheck =  orderStatusRepo.getByuserorderproductId(userorderproduct.getUserorderproductId());
 
-	// 	// if(productCheck.isPresent() && userCheck.isPresent()){
-	// 		for (UserorderproductDTO userorderproductDTO2 : userorderproductDTO) {
-	// 			// userorderproductDTO2.setStatus("checkout");
-	// 			// List<Userorderproduct> userorderproduct3 = userorderproductMapper.DTOtoEnt(userorderproductDTO);
-	// 			// orderStatusRepo.saveAll(userorderproductMapper.DTOtoEnt(userorderproductDTO));
-	// 			orderStatusRepo.updateOrderStatus("checkout",userorderproductDTO2.getUser().getUserId());
-	// 		}
-	// 		// userorderproductDTO.setStatus("checkout");
-	
-	// 		return ResponseViewModel.<Object>builder().data(null).message("Added to Checkout").statusCode(HttpStatus.OK.value()).build();
-	// 	// }
-	// 	// else{
-	// 	// 	return ResponseViewModel.<Userorderproduct>builder().data(null).message("Can't checkout product").statusCode(HttpStatus.OK.value()).build();
-	// 	// }
-	// }
+    public ResponseViewModel<Object> deleteOrderById(@PathVariable Integer id){
+		Optional<Userorderproduct> order = orderStatusRepo.findById(id);
+		if(order.isPresent() ){
+			orderStatusRepo.deleteById(id);
+			return ResponseViewModel.<Object>builder().data(null).message("Order Removed from Cart").statusCode(HttpStatus.OK.value()).build();
+		}
+		else{
+            return ResponseViewModel.<Object>builder().data(null).message("Couldn't remove product").statusCode(HttpStatus.NOT_FOUND.value()).build();
+        }
+	}
 }
