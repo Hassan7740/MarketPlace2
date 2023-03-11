@@ -19,17 +19,21 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/auth")
+        http
+                .csrf()
+                .disable() //disable some kind of verification
+                .authorizeHttpRequests()
+                .requestMatchers("/auth") //my white list any one can access
                 .permitAll()
-                .anyRequest()
+                .anyRequest() //any other requests must be auth
                 .authenticated()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterAfter(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //let spring create new session for every request
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); //add jwt filter before username pass auth filter
+//        http.formLogin();
 
 
 
