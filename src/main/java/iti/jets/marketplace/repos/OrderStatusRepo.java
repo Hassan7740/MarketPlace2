@@ -18,6 +18,12 @@ public interface OrderStatusRepo extends JpaRepository<Userorderproduct,Integer>
     @Modifying
 	// @Query("update Userorderproduct uop set uop.status = ?1 where uop.userId = ?2")
     @Query(value="update userorderproduct set status = ?1 where userId = ?2",nativeQuery = true)
-    public Integer updateOrderStatus(String status, int id);
+    public Integer checkoutOrder(String status, int id);
+
+	@Transactional
+    @Modifying
+    @Query(value="update userorderproduct set status = ?1 where userId = ?2 and productId = ?3",nativeQuery = true)
+    public Integer deliveredOrder(String status, int uId ,int pId);
+
 
 }

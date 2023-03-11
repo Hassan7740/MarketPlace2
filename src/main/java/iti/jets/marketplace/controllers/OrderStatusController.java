@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import iti.jets.marketplace.dtos.UserorderproductDTO;
+import iti.jets.marketplace.exceptions.ResourceNotFoundException;
 import iti.jets.marketplace.models.Userorderproduct;
 import iti.jets.marketplace.servcies.OrderStatusService;
 import iti.jets.marketplace.utils.ResponseViewModel;
@@ -25,7 +26,7 @@ public class OrderStatusController {
 		this.orderStatusService = orderStatusService;
 	}
 	@PostMapping
-	public ResponseViewModel<Userorderproduct> addToCart(@RequestBody UserorderproductDTO userorderproductDTO){
+	public ResponseViewModel<Userorderproduct> addToCart(@RequestBody UserorderproductDTO userorderproductDTO)throws ResourceNotFoundException{
 		return orderStatusService.addToCart(userorderproductDTO);
 	}
 
@@ -38,6 +39,11 @@ public class OrderStatusController {
 	@PatchMapping("/checkout")
 	public ResponseViewModel<Object> checkout(@RequestBody List<UserorderproductDTO> userorderproductDTO){
 		return orderStatusService.checkout(userorderproductDTO);
+	}
+
+	@PatchMapping("/delivered")
+	public ResponseViewModel<Object> delivered(@RequestBody List<UserorderproductDTO> userorderproductDTO){
+		return orderStatusService.delivered(userorderproductDTO);
 	}
 
 	@DeleteMapping("{id}")

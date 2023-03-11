@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.dtos.UserorderproductDTO;
+import iti.jets.marketplace.exceptions.ResourceNotFoundException;
+import iti.jets.marketplace.exceptions.handlers.DataIntegrityExceptionHandler;
 import iti.jets.marketplace.mappers.UserorderproductMapper;
 import iti.jets.marketplace.models.Userorderproduct;
 import iti.jets.marketplace.repos.OrderStatusRepo;
@@ -41,9 +44,16 @@ public class OrderStatusService {
 
 	public ResponseViewModel<Object> checkout(List<UserorderproductDTO> userorderproductDTO){
 		for (UserorderproductDTO userorderproductDTO2 : userorderproductDTO) {
-			orderStatusRepo.updateOrderStatus("checkout",userorderproductDTO2.getUser().getUserId());
+			orderStatusRepo.checkoutOrder("checkout",userorderproductDTO2.getUser().getUserId());
 		}
 		return ResponseViewModel.<Object>builder().data(null).message("Added to Checkout").statusCode(HttpStatus.OK.value()).build();
+	}
+
+	public ResponseViewModel<Object> delivered(List<UserorderproductDTO> userorderproductDTO){
+		for (UserorderproductDTO userorderproductDTO2 : userorderproductDTO) {
+			orderStatusRepo.deliveredOrder("delivered",userorderproductDTO2.getUser().getUserId(),userorderproductDTO2.getProduct().getProductId());
+		}
+		return ResponseViewModel.<Object>builder().data(null).message("Added to Delivered").statusCode(HttpStatus.OK.value()).build();
 	}
 
 
@@ -55,6 +65,6 @@ public class OrderStatusService {
 		}
 		else{
             return ResponseViewModel.<Object>builder().data(null).message("Couldn't remove product").statusCode(HttpStatus.NOT_FOUND.value()).build();
-        }
+		}
 	}
 }
