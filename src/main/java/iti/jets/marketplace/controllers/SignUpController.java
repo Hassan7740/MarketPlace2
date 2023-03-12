@@ -1,10 +1,12 @@
 package iti.jets.marketplace.controllers;
 
 
+import iti.jets.marketplace.Security.Response.TokenResponse;
 import iti.jets.marketplace.dtos.UserDTO;
 import iti.jets.marketplace.servcies.SignUpServices;
 import iti.jets.marketplace.utils.ResponseViewModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/signup")
+@RequestMapping("/auth/signup")
 public class SignUpController {
 
     private final SignUpServices signUpServices;
@@ -22,14 +24,9 @@ public class SignUpController {
     }
 
     @PostMapping
-    public ResponseViewModel<Object> addNewUser(@RequestBody UserDTO signUpDTO ){
-        UserDTO signUpDTORes = signUpServices.saveUser(signUpDTO);
+    public ResponseEntity<TokenResponse> addNewUser(@RequestBody UserDTO signUpDTO ){
 
-        if( signUpDTORes != null){
-            return ResponseViewModel.<Object>builder().data(signUpDTORes).message("User Saved Successfully").statusCode(HttpStatus.ACCEPTED.value()).build();
-
-        }
-        return ResponseViewModel.<Object>builder().data(null).message("User Already Exist").statusCode(HttpStatus.NOT_FOUND.value()).build();
+        return ResponseEntity.ok(signUpServices.saveUser(signUpDTO));
     }
 
 }

@@ -1,6 +1,8 @@
 package iti.jets.marketplace.controllers;
 
+import iti.jets.marketplace.Security.Response.TokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,17 +12,18 @@ import iti.jets.marketplace.dtos.LoginDTO;
 import iti.jets.marketplace.dtos.LoginResponceDTO;
 import iti.jets.marketplace.servcies.LoginService;
 import iti.jets.marketplace.utils.ResponseViewModel;
+import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/auth/login")
 public class LoginController {
   @Autowired
   LoginService loginService;
 
   @PostMapping
-  public ResponseViewModel<LoginResponceDTO> login(@RequestBody LoginDTO lDto) {
+  public ResponseEntity<TokenResponse> login(@RequestBody LoginDTO lDto) {
 
-    return loginService.userValidation(lDto);
+    return ResponseEntity.ok(loginService.userValidation(lDto));
 
   }
 }

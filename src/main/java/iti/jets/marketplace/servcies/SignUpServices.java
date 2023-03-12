@@ -1,5 +1,7 @@
 package iti.jets.marketplace.servcies;
 
+import iti.jets.marketplace.Security.Response.TokenResponse;
+import iti.jets.marketplace.Security.config.JwtService;
 import iti.jets.marketplace.dtos.UserDTO;
 import iti.jets.marketplace.mappers.AddressMapper;
 import iti.jets.marketplace.mappers.UserMapper;
@@ -17,15 +19,18 @@ public class SignUpServices {
     private final AddressMapper addressMapper;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public SignUpServices(UserRepo userRepo, UserMapper userMapper, AddressMapper addressMapper) {
+    private final JwtService jwtService;
+
+    public SignUpServices(UserRepo userRepo, UserMapper userMapper, AddressMapper addressMapper, JwtService jwtService) {
         this.userRepo = userRepo;
         this.userMapper = userMapper;
         this.addressMapper = addressMapper;
+        this.jwtService = jwtService;
     }
 
-    public UserDTO saveUser(UserDTO signUpDTO) {
+    public TokenResponse saveUser(UserDTO signUpDTO) {
 
-        if (userRepo.getUserByEmail(signUpDTO.getEmail()) == null) {
+//        if (userRepo.getUserByEmail(signUpDTO.getEmail()) == null) {
 
             Address address = addressMapper.map(signUpDTO.getAddress());
             address.setUsers(null);
@@ -33,15 +38,16 @@ public class SignUpServices {
             User user = userMapper.map(signUpDTO);
             user.setAddress(address);
             user.setPassword(encoder.encode(signUpDTO.getPassword()));
-            user.setType("customer");
             userRepo.save(user);
 
-            signUpDTO = userMapper.map(user);
+            String jwtToken = jwtService.generateToken(user);
 
-        } else {
-            signUpDTO = null;
-        }
+//            signUpDTO = userMapper.map(user);
 
-        return signUpDTO;
+//        } else {
+//            signUpDTO = null;
+//        }
+
+        return new TokenResponse(jwtToken);
     }
 }

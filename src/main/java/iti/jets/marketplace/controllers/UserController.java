@@ -8,6 +8,7 @@ import iti.jets.marketplace.utils.ResponseViewModel;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
@@ -26,7 +27,6 @@ public class UserController {
   }
 
 
-  
   @PatchMapping
   public ResponseViewModel<Object> updateUser(@RequestBody UserDTO userDTO) {
     userService.updateUser(userDTO);
@@ -37,6 +37,11 @@ public class UserController {
   public ResponseViewModel<Object> getAllUsers(){
     List<UserDTO> allUsers =  userService.findAllUser();
     return new ResponseViewModel<Object>("Done" ,HttpStatus.OK.value(),allUsers);
+  }
+
+  @GetMapping
+  public ResponseEntity<String> getString(){
+    return ResponseEntity.ok("Hello World");
   }
 
 }
