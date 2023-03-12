@@ -8,10 +8,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true
+)
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -23,7 +30,7 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable() //disable some kind of verification
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**","/**") //my white list any one can access
+                .requestMatchers("/auth/**") //my white list any one can access
                 .permitAll()
                 .anyRequest() //any other requests must be auth
                 .authenticated()
