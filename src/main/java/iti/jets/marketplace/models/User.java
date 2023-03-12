@@ -2,7 +2,7 @@
 // Generated Mar 4, 2023, 11:48:59 PM by Hibernate Tools 6.0.0.Alpha3
 package iti.jets.marketplace.models;
 
-import iti.jets.marketplace.models.Roles;
+import iti.jets.marketplace.models.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -60,7 +62,9 @@ public class User  implements UserDetails {
 
     @Column(name="creditCard", length=255)
      private String creditCard;
-    private Set<Roles> roleses = new HashSet<Roles>(0);
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
      private Set<Userorderproduct> userorderproducts = new HashSet<Userorderproduct>(0);
@@ -211,11 +215,10 @@ public class User  implements UserDetails {
         this.userreviewproducts = userreviewproducts;
     }
 
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        // return null;
+        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
     }
 
     @Override

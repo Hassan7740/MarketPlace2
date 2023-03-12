@@ -6,6 +6,7 @@ import iti.jets.marketplace.dtos.UserDTO;
 import iti.jets.marketplace.mappers.AddressMapper;
 import iti.jets.marketplace.mappers.UserMapper;
 import iti.jets.marketplace.models.Address;
+import iti.jets.marketplace.models.Role;
 import iti.jets.marketplace.repos.UserRepo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,8 @@ public class SignUpServices {
 
             User user = userMapper.map(signUpDTO);
             user.setAddress(address);
+            user.setRole(Role.USER);
+            System.out.println(user.getRole());
             user.setPassword(encoder.encode(signUpDTO.getPassword()));
             userRepo.save(user);
 

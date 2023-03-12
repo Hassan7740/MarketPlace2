@@ -8,9 +8,11 @@ import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.models.Product;
 import iti.jets.marketplace.servcies.ProductService;
 import iti.jets.marketplace.utils.ResponseViewModel;
+import jakarta.annotation.security.RolesAllowed;
 
 
 @RestController
+// @RolesAllowed("ADMIN")
 @RequestMapping("/product")
 public class ProductController {
 
