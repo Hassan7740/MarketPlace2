@@ -1,7 +1,12 @@
 package iti.jets.marketplace.servcies;
 
 
+import iti.jets.marketplace.Security.Response.TokenResponse;
+import iti.jets.marketplace.Security.config.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +17,23 @@ import iti.jets.marketplace.models.User;
 import iti.jets.marketplace.repos.UserRepo;
 import iti.jets.marketplace.utils.ResponseViewModel;
 
- 
+import java.util.Optional;
+
 
 @Service
+
 public class LoginService {
+
     @Autowired
-    UserRepo re;
-    
+    private  UserRepo re;
+
     @Autowired
-    LoingResponceMapper loingResponceMapper ;
+    private LoingResponceMapper loingResponceMapper ;
+
+    @Autowired
+    private JwtService jwtService;
+  @Autowired
+    private AuthenticationManager authenticationManager;
     
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -29,23 +42,20 @@ public class LoginService {
  
     }
 
-    public ResponseViewModel<LoginResponceDTO>userValidation(LoginDTO ldto) {
-         
-       User u =(User) re.getUserByEmail(ldto.getEmail());
-    //    String hsing = encoder.encode(ldto.getPassword());
-       
-       if(u == null)
-       {
-       return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,null);
-       }
-       else if(encoder.matches(ldto.getPassword(), u.getPassword()))
-       {
-        return  new ResponseViewModel<LoginResponceDTO>("login Sucessfully",200,loingResponceMapper.map(u));
-       }else
-       {
-        return  new ResponseViewModel<LoginResponceDTO>("user name or password in valid!",401,null);
+    public TokenResponse userValidation(LoginDTO ldto) {
+         authenticationManager.authenticate(
+                 new UsernamePasswordAuthenticationToken(
+                         ldto.getEmail(),
+                         ldto.getPassword()
+                 )
+         );
 
-       }
+       User u = re.findByEmail(ldto.getEmail()).orElseThrow();
+
+       String jwtToken = jwtService.generateToken(u);
+
+       return new TokenResponse(jwtToken);
+
          
     }
 }
