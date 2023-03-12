@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import iti.jets.marketplace.dtos.AmountDTO;
 import iti.jets.marketplace.servcies.AddAmountService;
 import iti.jets.marketplace.utils.ResponseViewModel;
+import jakarta.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping("/add")
+@RolesAllowed("ADMIN")
+// @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AddAmountController {
     @Autowired
     AddAmountService addAmountService;
 
     @PostMapping
+    @RolesAllowed("ADMIN")
     public ResponseViewModel<AmountDTO> setAdditionalAmount(@RequestBody AmountDTO amountDTO) {
         return addAmountService.addAmount(amountDTO);
     }

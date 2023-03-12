@@ -23,7 +23,7 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable() //disable some kind of verification
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**","/**") //my white list any one can access
+                .requestMatchers("/auth/**") //my white list any one can access
                 .permitAll()
                 .anyRequest() //any other requests must be auth
                 .authenticated()
@@ -34,9 +34,6 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); //add jwt filter before username pass auth filter
 //        http.formLogin();
-
-
-
         return http.build();
     }
 
