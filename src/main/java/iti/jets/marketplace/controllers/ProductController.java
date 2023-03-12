@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.web.server.authorization.HttpStatusServerAccessDeniedHandler;
 import org.springframework.web.bind.annotation.*;
 import iti.jets.marketplace.dtos.ProductDTO;
@@ -25,40 +26,47 @@ public class ProductController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseViewModel<Product> addProduct(@RequestBody ProductDTO productDTO) {
         
        return productService.add(productDTO);
     }
 
     @GetMapping("{productName}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseViewModel<List<ProductDTO>> searchProductByName(@PathVariable String productName)
     {
       return  productService.searchByName(productName);
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
       public ResponseViewModel<Object> deleteProductById(@PathVariable Integer id){
       return  productService.deleteProductById(id);
     }
 
     @PatchMapping("/update")
+    @PreAuthorize("hasAnyRole('ADMIN')")
       public ResponseViewModel<Object> updateProduct(@RequestBody ProductDTO productDTO){
       return productService.updateProduct(productDTO);
     }
 
     @GetMapping("/filter/{productName}/{categoryName}/{price}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseViewModel<List<ProductDTO>> productFilter(@PathVariable String productName , @PathVariable String categoryName , @PathVariable float price ){
       List<ProductDTO> productsDTO = productService.productFilter(productName, categoryName, price); 
       return new ResponseViewModel<List<ProductDTO>>("done" , HttpStatus.OK.value() , productsDTO) ;
     }
 
     @GetMapping("/{categoryName}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseViewModel<List<ProductDTO>> productFilterByCategoryName( @PathVariable String categoryName){
       List<ProductDTO> productsDTO = productService.filterByCategoryName(categoryName); 
       return new ResponseViewModel<List<ProductDTO>>("done" , HttpStatus.OK.value() , productsDTO) ;
     }
 
     @GetMapping("/{price}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseViewModel<List<ProductDTO>> productFilterByPrice(@PathVariable float price ){
       List<ProductDTO> productsDTO = productService.filterByPrice(price); 
       return new ResponseViewModel<List<ProductDTO>>("done" , HttpStatus.OK.value() , productsDTO) ;

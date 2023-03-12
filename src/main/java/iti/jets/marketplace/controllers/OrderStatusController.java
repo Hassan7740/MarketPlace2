@@ -2,6 +2,7 @@ package iti.jets.marketplace.controllers;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,38 +17,46 @@ import iti.jets.marketplace.exceptions.ResourceNotFoundException;
 import iti.jets.marketplace.models.Userorderproduct;
 import iti.jets.marketplace.servcies.OrderStatusService;
 import iti.jets.marketplace.utils.ResponseViewModel;
+import jakarta.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping("/orderStatus")
 public class OrderStatusController {
-	
+
 	private final OrderStatusService orderStatusService;
-	public OrderStatusController(OrderStatusService orderStatusService){
+
+	public OrderStatusController(OrderStatusService orderStatusService) {
 		this.orderStatusService = orderStatusService;
 	}
+
 	@PostMapping
-	public ResponseViewModel<Userorderproduct> addToCart(@RequestBody UserorderproductDTO userorderproductDTO)throws ResourceNotFoundException{
+	public ResponseViewModel<Userorderproduct> addToCart(@RequestBody UserorderproductDTO userorderproductDTO)
+			throws ResourceNotFoundException {
 		return orderStatusService.addToCart(userorderproductDTO);
 	}
 
 	// @PostMapping
-	// public ResponseViewModel<List<Userorderproduct>> addToCart(@RequestBody List<UserorderproductDTO> userorderproductDTO){
-		
-	// 	return orderStatusService.addToCart(userorderproductDTO);
+	// public ResponseViewModel<List<Userorderproduct>> addToCart(@RequestBody
+	// List<UserorderproductDTO> userorderproductDTO){
+
+	// return orderStatusService.addToCart(userorderproductDTO);
 	// }
 
 	@PatchMapping("/checkout")
-	public ResponseViewModel<Object> checkout(@RequestBody List<UserorderproductDTO> userorderproductDTO){
+	@PreAuthorize("hasAnyRole('ADMIN','USER')")
+	public ResponseViewModel<Object> checkout(@RequestBody List<UserorderproductDTO> userorderproductDTO) {
 		return orderStatusService.checkout(userorderproductDTO);
 	}
 
 	@PatchMapping("/delivered")
-	public ResponseViewModel<Object> delivered(@RequestBody List<UserorderproductDTO> userorderproductDTO){
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public ResponseViewModel<Object> delivered(@RequestBody List<UserorderproductDTO> userorderproductDTO) {
 		return orderStatusService.delivered(userorderproductDTO);
 	}
 
 	@DeleteMapping("{id}")
-	public ResponseViewModel<Object> deleteOrderById(@PathVariable Integer id){
+	@PreAuthorize("hasAnyRole('ADMIN','USER')")
+	public ResponseViewModel<Object> deleteOrderById(@PathVariable Integer id) {
 		return orderStatusService.deleteOrderById(id);
 	}
 }
