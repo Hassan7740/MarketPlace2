@@ -1,6 +1,7 @@
 package iti.jets.marketplace.controllers;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.server.authorization.HttpStatusServerAccessDeniedHandler;
 import org.springframework.web.bind.annotation.*;
