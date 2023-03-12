@@ -10,7 +10,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 @RestController
 // @RolesAllowed("ADMIN")
-@RolesAllowed("ADMIN")
+// @RolesAllowed("ADMIN")
 // @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/productpage")
 public class ProductPageController {
@@ -22,7 +22,7 @@ public class ProductPageController {
   }
 
   @GetMapping("product/{id}")
-  @RolesAllowed("ADMIN")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public ResponseViewModel<ProductDTO> searchProductById(@PathVariable int id) {
     var x = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
     System.out.println(x);
