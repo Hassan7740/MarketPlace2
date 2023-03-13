@@ -34,7 +34,6 @@ public class User  implements UserDetails {
 
     @Id @GeneratedValue(strategy=IDENTITY)
 
-
     @Column(name="userId", unique=true, nullable=false)
      private Integer userId;
 
