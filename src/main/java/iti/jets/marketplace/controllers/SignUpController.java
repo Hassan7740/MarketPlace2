@@ -7,9 +7,11 @@ import iti.jets.marketplace.servcies.SignUpServices;
 import iti.jets.marketplace.utils.ResponseViewModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -24,6 +26,7 @@ public class SignUpController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = {"*"},methods = {RequestMethod.POST})
     public ResponseEntity<TokenResponse> addNewUser(@RequestBody UserDTO signUpDTO ){
 
         return ResponseEntity.ok(signUpServices.saveUser(signUpDTO));
