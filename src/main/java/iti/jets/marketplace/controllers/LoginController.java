@@ -18,7 +18,7 @@ import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
 @RequestMapping("/auth/login")
-@CrossOrigin(origins = {"http://localhost:4200"},methods = {RequestMethod.POST})
+@CrossOrigin(origins = {"*"},methods = {RequestMethod.POST})
 public class LoginController {
   @Autowired
   LoginService loginService;

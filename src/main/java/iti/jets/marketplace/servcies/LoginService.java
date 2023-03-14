@@ -5,6 +5,7 @@ import iti.jets.marketplace.Security.Response.TokenResponse;
 import iti.jets.marketplace.Security.config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Lettuce.Cluster.Refresh;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,7 +38,7 @@ public class LoginService {
     
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-
+    private String refresh_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3ODc5Nzg0MSwiZXhwIjoxNjc4ODMzODQxfQ.CZ0IOiF1ytLrE7zQDPSd2TeKG-ocE3BAwBrdLG7CH-M";
     public LoginService() {
  
     }
@@ -54,7 +55,7 @@ public class LoginService {
 
        String jwtToken = jwtService.generateToken(u);
 
-       return new TokenResponse(jwtToken);
+       return new TokenResponse(jwtToken,refresh_token);
 
          
     }
