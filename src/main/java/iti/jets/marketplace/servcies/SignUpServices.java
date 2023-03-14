@@ -21,6 +21,8 @@ public class SignUpServices {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     private final JwtService jwtService;
+    private String refresh_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3ODc5Nzg0MSwiZXhwIjoxNjc4ODMzODQxfQ.CZ0IOiF1ytLrE7zQDPSd2TeKG-ocE3BAwBrdLG7CH-M";
+
 
     public SignUpServices(UserRepo userRepo, UserMapper userMapper, AddressMapper addressMapper, JwtService jwtService) {
         this.userRepo = userRepo;
@@ -51,6 +53,6 @@ public class SignUpServices {
 //            signUpDTO = null;
 //        }
 
-        return new TokenResponse(jwtToken);
+        return new TokenResponse(jwtToken, refresh_token);
     }
 }

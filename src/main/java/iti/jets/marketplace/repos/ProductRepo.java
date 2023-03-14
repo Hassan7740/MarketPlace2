@@ -34,4 +34,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     
     @Query("SELECT p FROM Product p  where p.price = :price ")
     public List<Product> productFilterByPrice(@Param(value = "price") float price);
+
+
 }

@@ -7,6 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import iti.jets.marketplace.dtos.ProductCardDTO;
 import iti.jets.marketplace.dtos.ProductDTO;
 import iti.jets.marketplace.mappers.ProductMapper;
 import iti.jets.marketplace.models.Product;
@@ -103,5 +105,17 @@ public class ProductService {
     public List<ProductDTO> findAll(int pageNum ,int pageSize){
         PageRequest pr = PageRequest.of(pageNum, pageSize);
         return productMapper.toDTOList(productRepo.findAll(pr).toList());
+    }
+
+
+
+
+    public List<ProductCardDTO> getAllProduct(int offset ,int limit){
+
+        PageRequest pr = PageRequest.of(offset, limit);
+        List<ProductCardDTO> products = productMapper.productsToprProductsCardDTO(productRepo.findAll(pr).toList());
+    
+    
+        return products;
     }
 }
