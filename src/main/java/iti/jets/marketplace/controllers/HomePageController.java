@@ -4,17 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.service.annotation.GetExchange;
 
 import iti.jets.marketplace.dtos.HomePageDTO;
-import iti.jets.marketplace.dtos.ProductDTO;
+import iti.jets.marketplace.dtos.*;
 import iti.jets.marketplace.dtos.productcards.ProductCardDTO;
 import iti.jets.marketplace.models.Product;
 import iti.jets.marketplace.servcies.*;
 import iti.jets.marketplace.servcies.CategroyService;
 import iti.jets.marketplace.servcies.ProductService;
 import iti.jets.marketplace.utils.ResponseViewModel;
+
+import java.util.List;
 
 @RequestMapping("/homepage")
 @RestController
