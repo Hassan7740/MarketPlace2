@@ -2,10 +2,14 @@ package iti.jets.marketplace.servcies;
 
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import iti.jets.marketplace.dtos.ProductDTO;
+import iti.jets.marketplace.dtos.productcards.ProductCardDTO;
+import iti.jets.marketplace.mappers.ProductCardDTOMapper;
 import iti.jets.marketplace.mappers.ProductMapper;
 import iti.jets.marketplace.models.Product;
 import iti.jets.marketplace.repos.ProductRepo;
@@ -18,10 +22,12 @@ public class ProductService {
     @Autowired
     private final ProductRepo productRepo;
     private final ProductMapper productMapper;
+    private final ProductCardDTOMapper productCardDTOMapper;
 
-    public ProductService(ProductRepo productRepo, ProductMapper productMapper) {
+    public ProductService(ProductRepo productRepo, ProductMapper productMapper,ProductCardDTOMapper productCardDTOMapper) {
         this.productRepo = productRepo;
         this.productMapper = productMapper;
+        this.productCardDTOMapper = productCardDTOMapper;
     }
 
     public ResponseViewModel<Product> add(ProductDTO productDTO)
@@ -98,4 +104,17 @@ public class ProductService {
         return productsDTO ;
     }
 
+
+
+
+
+
+    public List<ProductCardDTO> getAllProduct(int offset ,int limit){
+
+        PageRequest pr = PageRequest.of(offset, limit);
+        List<ProductCardDTO> products = productCardDTOMapper.getAllProduct(productRepo.findAll(pr).toList());
+    
+    
+        return products;
+    }
 }
