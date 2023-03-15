@@ -56,7 +56,7 @@ public class LoginService {
                                         + u.getAddress().getArea());
                         h.put("phone",u.getPhone());
 
-                String jwtToken = jwtService.generateToken( u);
+                String jwtToken = jwtService.generateToken(h,u);
 
                 return new TokenResponse(jwtToken, refresh_token);
         }

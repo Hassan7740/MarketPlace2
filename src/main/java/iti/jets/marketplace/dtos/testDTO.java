@@ -2,10 +2,11 @@ package iti.jets.marketplace.dtos;
 
 import lombok.Data;
 
-@Data
+ @Data
 public class testDTO {
     String email;
     String status;
+    int count  ;
     Integer[] productId;
-
+    Integer[] proudctAmount;
 }

@@ -1,5 +1,7 @@
 package iti.jets.marketplace.servcies;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,7 @@ public class TestService {
         Integer[] products = tDto.getProductId();
         User u = uRepo.getUserByEmail(tDto.getEmail());
         for (int i = 0; i < products.length; i++) {
-           oRepo.save(new Userorderproduct(pRepo.getProductByproductId(products[i]), u));
+           oRepo.save(new Userorderproduct(pRepo.getProductByproductId(products[i]), u,tDto.getStatus(),tDto.getProudctAmount()[i],new java.util.Date()));
         }
     }
 }
