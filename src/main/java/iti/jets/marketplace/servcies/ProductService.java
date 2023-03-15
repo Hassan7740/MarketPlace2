@@ -24,6 +24,7 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final ProductMapper productMapper;
 
+
     private final ProductCardDTOMapper productCardDTOMapper;
 
     public ProductService(ProductRepo productRepo, ProductMapper productMapper,ProductCardDTOMapper productCardDTOMapper) {
@@ -54,18 +55,28 @@ public class ProductService {
 
     }
 
-    public ResponseViewModel<ProductDTO> searchById(int id) {
+    //product details page
+
+    public ProductCardDTO searchById(int id) {
         Product product = productRepo.getProductByproductId(id);
 
         if (product != null) {
-            ProductDTO productDTO = productMapper.productToProductDto(product);
-            return ResponseViewModel.<ProductDTO>builder().data(productDTO).message("Get data for user Successfully")
-                    .statusCode(HttpStatus.OK.value()).build();
+            ProductCardDTO productDTO = productCardDTOMapper.ProductCardMap(product);
+            return productDTO;
         }
-        return ResponseViewModel.<ProductDTO>builder().data(null).message("User Not Found")
-                .statusCode(HttpStatus.NOT_FOUND.value()).build();
+        return new ProductCardDTO();
 
     }
+
+    public List<ProductCardDTO> getProductsByCategoryId(int id){
+
+        List<Product> product = productRepo.getProductByCategoryID(id);
+        List<ProductCardDTO> productDTO = productCardDTOMapper.getAllProduct(product);
+            
+        return productDTO;
+    }
+
+
 
     public ResponseViewModel<Object> deleteProductById(@PathVariable Integer id) {
         Optional<Product> product = productRepo.findById(id);

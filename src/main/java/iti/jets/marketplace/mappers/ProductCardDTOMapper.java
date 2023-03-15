@@ -44,5 +44,30 @@ public class ProductCardDTOMapper {
 
 
     }
+
+
+    public ProductCardDTO ProductCardMap(Product x){
+        ProductCardDTO p = new ProductCardDTO();
+        p.setId(x.getProductId());
+        p.setTitle(x.getProductName());
+        p.setPrice(x.getPrice());
+        p.setAmount(x.getProductAmount());
+        p.setDescription(x.getProductDescription());
+
+        List<String> images = new ArrayList<>();
+        for(Image imgObj: x.getImages()){
+            images.add(imgObj.getImageUrl());
+        }
+        p.setImages(images);
+
+        categoryCardDto categoryCard = new categoryCardDto();
+        categoryCard.setId(x.getCategory().getCategoryId());
+        categoryCard.setName(x.getCategory().getCategoryName());
+
+        p.setCategory(categoryCard);
+
+        return p;
+
+    }
     
 }

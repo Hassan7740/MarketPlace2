@@ -16,6 +16,7 @@ public class ProductCardDTO {
     private Integer id;
     private String title;
     private float price;
+    private Integer amount;
     private String description;
     private List<String> images;
     private categoryCardDto category;
