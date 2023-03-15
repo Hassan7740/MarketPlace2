@@ -1,13 +1,12 @@
 package iti.jets.marketplace.dtos;
 
-import java.sql.Date;
-
 import lombok.Data;
 
-@Data
+ @Data
 public class CartDTO {
-	private CartProductDTO CartProductDTO;
-	private String status;
-    private Integer productCount;
-    private Date orderDate;
+    String email;
+    String status;
+    int count  ;
+    Integer[] productId;
+    Integer[] proudctAmount;
 }

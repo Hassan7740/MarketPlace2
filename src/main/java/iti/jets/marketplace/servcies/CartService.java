@@ -5,7 +5,7 @@ import java.sql.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import iti.jets.marketplace.dtos.testDTO;
+import iti.jets.marketplace.dtos.CartDTO;
 import iti.jets.marketplace.models.Product;
 import iti.jets.marketplace.models.User;
 import iti.jets.marketplace.models.Userorderproduct;
@@ -13,7 +13,7 @@ import iti.jets.marketplace.repos.OrderStatusRepo;
 import iti.jets.marketplace.repos.ProductRepo;
 import iti.jets.marketplace.repos.UserRepo;
 @Service
-public class TestService {
+public class CartService {
     @Autowired
     OrderStatusRepo oRepo;
     @Autowired
@@ -21,7 +21,7 @@ public class TestService {
     @Autowired
     ProductRepo pRepo;
 
-    public void setOrder(testDTO tDto) {
+    public void setOrder(CartDTO tDto) {
         Integer[] products = tDto.getProductId();
         User u = uRepo.getUserByEmail(tDto.getEmail());
         for (int i = 0; i < products.length; i++) {

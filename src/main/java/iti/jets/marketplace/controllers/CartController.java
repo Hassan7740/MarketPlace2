@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import iti.jets.marketplace.dtos.testDTO;
-import iti.jets.marketplace.servcies.TestService;
+import iti.jets.marketplace.dtos.CartDTO;
+import iti.jets.marketplace.servcies.CartService;
 
 @RestController
 @RequestMapping("auth/test")
 @CrossOrigin(origins = {"http://localhost:4200"}, methods = { RequestMethod.POST })
 @PreAuthorize("hasAnyRole('ADMIN','USER')")
-public class tetstController {
+public class CartController {
     @Autowired
-    TestService testService;
+    CartService testService;
     @PostMapping
-    public ResponseEntity<Object> test(@RequestBody testDTO o) {
+    public ResponseEntity<Object> test(@RequestBody CartDTO o) {
         System.out.println(o);
         testService.setOrder(o);
          return ResponseEntity.ok(null);
