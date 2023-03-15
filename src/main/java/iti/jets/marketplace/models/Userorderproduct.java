@@ -60,7 +60,7 @@ public class Userorderproduct  implements java.io.Serializable {
         this.userorderproductId = userorderproductId;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="productId", nullable=false)
     public Product getProduct() {
         return this.product;
@@ -70,7 +70,7 @@ public class Userorderproduct  implements java.io.Serializable {
         this.product = product;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userId", nullable=false)
     public User getUser() {
         return this.user;

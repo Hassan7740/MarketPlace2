@@ -11,8 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/auth/user")
+
+@CrossOrigin(allowedHeaders = {"Authorization", "Origin"})
 public class UserController {
 
   private final UserService userService;
@@ -25,9 +28,8 @@ public class UserController {
   @PreAuthorize("hasAnyRole('ADMIN')")
   public ResponseViewModel<UserDTO> findUserById(@PathVariable int id) throws ResourceNotFoundException {
     UserDTO userDTO = userService.findUserById(id);
-    return new ResponseViewModel<UserDTO>("Done",HttpStatus.OK.value(), userDTO) ;
+    return new ResponseViewModel<UserDTO>("Done", HttpStatus.OK.value(), userDTO);
   }
-
 
   @PatchMapping
   @PreAuthorize("hasAnyRole('ADMIN','USER')")
@@ -38,10 +40,9 @@ public class UserController {
 
   @GetMapping("/all")
   @PreAuthorize("hasAnyRole('ADMIN')")
-  public ResponseViewModel<Object> getAllUsers(){
-    List<UserDTO> allUsers =  userService.findAllUser();
-    return new ResponseViewModel<Object>("Done" ,HttpStatus.OK.value(),allUsers);
+  public ResponseViewModel<Object> getAllUsers() {
+    List<UserDTO> allUsers = userService.findAllUser();
+    return new ResponseViewModel<Object>("Done", HttpStatus.OK.value(), allUsers);
   }
- 
 
 }

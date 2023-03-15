@@ -16,7 +16,5 @@ public interface UserreviewproductMapper {
     List<UserreviewproductDTO> DTOtoEnt(List<Userreviewproduct> userreviewproduct);
 
     List<Userreviewproduct> EntToDTO(List<UserreviewproductDTO> userreviewproductDTO);
-
-    
     
 }

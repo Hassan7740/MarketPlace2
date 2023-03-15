@@ -23,6 +23,7 @@ public class ProductPageController {
 
   @GetMapping("product/{id}")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @CrossOrigin(origins = {"*"},methods = {RequestMethod.POST})
   public ResponseViewModel<ProductDTO> searchProductById(@PathVariable int id) {
     var x = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
     System.out.println(x);

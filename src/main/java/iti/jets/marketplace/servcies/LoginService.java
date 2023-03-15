@@ -51,12 +51,12 @@ public class LoginService {
 
                 User u = re.findByEmail(ldto.getEmail()).orElseThrow();
                 HashMap h = new HashMap<>();
-                h.put("name", u.getFirstName() + " " + u.getLastName());
-                h.put("address", u.getAddress().getCountry() + " " + u.getAddress().getStreet() + " "
-                                + u.getAddress().getArea());
-                h.put("phone",u.getPhone());
+                        h.put("name", u.getFirstName() + " " + u.getLastName());
+                        h.put("address", u.getAddress().getCountry() + " " + u.getAddress().getStreet() + " "
+                                        + u.getAddress().getArea());
+                        h.put("phone",u.getPhone());
 
-                String jwtToken = jwtService.generateToken(h, u);
+                String jwtToken = jwtService.generateToken( u);
 
                 return new TokenResponse(jwtToken, refresh_token);
         }
